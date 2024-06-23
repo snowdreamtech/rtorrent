@@ -1,10 +1,29 @@
-FROM alpine:3.20.0
+FROM snowdreamtech/alpine:3.20.0
 
 LABEL maintainer="snowdream <sn0wdr1am@qq.com>"
 
-RUN apk add --no-cache musl-locales \
-    musl-locales-lang \
-    tzdata
+ENV FLOOD_PORT=3000 \
+    RTORRENT_HOST=localhost \
+    RTORRENT_PORT=50000 \
+    RTORRENT_SOCKET="/var/lib/rtorrent/.session/rtorrent.sock" 
+
+RUN apk add --no-cache rtorrent \
+    screen \
+    nodejs \
+    npm \
+    && mkdir -p /var/lib/rtorrent/  \
+    && adduser -h /var/lib/rtorrent/ -s /sbin/nologin -g rtorrent -D rtorrent >/dev/null 2>&1 \
+    && mkdir -p /var/lib/rtorrent/config/  \
+    && mkdir -p /var/lib/rtorrent/.session/  \
+    && mkdir -p /var/lib/rtorrent/download/  \
+    && mkdir -p /var/lib/rtorrent/watch/  \
+    && mkdir -p /var/lib/rtorrent/log/  \
+    && chown -R  rtorrent:rtorrent /var/lib/rtorrent  \
+    && npm install --global flood
+
+COPY config /var/lib/rtorrent/config
+
+EXPOSE 3000 50000/tcp 50000/udp
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
