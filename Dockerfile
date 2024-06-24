@@ -8,6 +8,7 @@ ENV RTORRENT_HOST=localhost \
 
 RUN apk add --no-cache rtorrent \
     screen \
+    nginx \
     && mkdir -p /var/lib/rtorrent/  \
     && adduser -h /var/lib/rtorrent/ -s /sbin/nologin -g rtorrent -D rtorrent >/dev/null 2>&1 \
     && mkdir -p /var/lib/rtorrent/config/  \
@@ -17,9 +18,11 @@ RUN apk add --no-cache rtorrent \
     && mkdir -p /var/lib/rtorrent/log/  \
     && chown -R  rtorrent:rtorrent /var/lib/rtorrent 
 
+COPY http.d /etc/nginx/http.d
+
 COPY config /var/lib/rtorrent/config
 
-EXPOSE 50000/tcp 50000/udp
+EXPOSE 80 443 50000/tcp 50000/udp
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
