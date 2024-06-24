@@ -2,6 +2,10 @@ FROM snowdreamtech/alpine:3.20.0
 
 LABEL maintainer="snowdream <sn0wdr1am@qq.com>"
 
+ENV RTORRENT_HOST=localhost \
+    RTORRENT_PORT=50000 \
+    RTORRENT_SOCKET="/var/lib/rtorrent/.session/rtorrent.sock" 
+
 RUN apk add --no-cache rtorrent \
     screen \
     && mkdir -p /var/lib/rtorrent/  \
@@ -15,7 +19,7 @@ RUN apk add --no-cache rtorrent \
 
 COPY config /var/lib/rtorrent/config
 
-EXPOSE 8080 6881/tcp 6881/udp
+EXPOSE 50000/tcp 50000/udp
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
