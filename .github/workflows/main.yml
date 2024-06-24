@@ -53,11 +53,11 @@ jobs:
             push: true
             tags: |
               snowdreamtech/rtorrent:flood-latest
-              snowdreamtech/rtorrent:flood-3.20.0
-              snowdreamtech/rtorrent:flood-3.20
-              snowdreamtech/rtorrent:flood-3
+              snowdreamtech/rtorrent:flood-0.9.8
+              snowdreamtech/rtorrent:flood-0.9
+              snowdreamtech/rtorrent:flood-0
               ghcr.io/snowdreamtech/rtorrent:flood-latest
-              ghcr.io/snowdreamtech/rtorrent:flood-3.20.0
-              ghcr.io/snowdreamtech/rtorrent:flood-3.20
-              ghcr.io/snowdreamtech/rtorrent:flood-3
+              ghcr.io/snowdreamtech/rtorrent:flood-0.9.8
+              ghcr.io/snowdreamtech/rtorrent:flood-0.9
+              ghcr.io/snowdreamtech/rtorrent:flood-0
              
