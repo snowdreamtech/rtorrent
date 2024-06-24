@@ -52,12 +52,12 @@ jobs:
             platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
             push: true
             tags: |
-              snowdreamtech/rtorrent:latest
-              snowdreamtech/rtorrent:0.9.8
-              snowdreamtech/rtorrent:0.9
-              snowdreamtech/rtorrent:0
-              ghcr.io/snowdreamtech/rtorrent:latest
-              ghcr.io/snowdreamtech/rtorrent:0.9.8
-              ghcr.io/snowdreamtech/rtorrent:0.9
-              ghcr.io/snowdreamtech/rtorrent:0
+              snowdreamtech/rtorrent:ruTorrent-latest
+              snowdreamtech/rtorrent:ruTorrent-0.9.8
+              snowdreamtech/rtorrent:ruTorrent-0.9
+              snowdreamtech/rtorrent:ruTorrent-0
+              ghcr.io/snowdreamtech/rtorrent:ruTorrent-latest
+              ghcr.io/snowdreamtech/rtorrent:ruTorrent-0.9.8
+              ghcr.io/snowdreamtech/rtorrent:ruTorrent-0.9
+              ghcr.io/snowdreamtech/rtorrent:ruTorrent-0
              
