@@ -11,6 +11,11 @@ RUN apk add --no-cache rtorrent \
     screen \
     nginx \
     curl \ 
+    sox \ 
+    ffmpeg \
+    mediainfo \ 
+    python3 \ 
+    php82 \
     php82-fpm \
     php82-cgi \
     php82-common \ 
