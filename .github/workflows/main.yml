@@ -3,7 +3,7 @@ name: CI Main
 on:
   push:
     branches:
-      - main  
+      - ruTorrent  
     tags:
       - '*'
   workflow_dispatch:
