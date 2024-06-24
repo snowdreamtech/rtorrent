@@ -4,14 +4,50 @@
 
 Docker Image packaging for rtorrent. (amd64, arm32v6, arm32v7, arm64v8, i386, ppc64le,riscv64, s390x)
 
-# Run
+# Usage
+
+To help you get started creating a container from this image you can either use docker-compose or the docker cli.
+
+## Docker Cli
 
 ```bash
-docker run --rm snowdreamtech/rtorrent:latest
+docker run -d \
+  --name=rtorrent \
+  -e TZ=Etc/UTC \
+  -e RTORRENT_PORT=50000 \
+  -e FLOOD_AUTH=default \
+  -e FLOOD_PORT=3000 \
+  -p 3000:3000 \
+  -p 50000:50000 \
+  -p 50000:50000/udp \
+  -v /path/to/config:/var/lib/rtorrent/config \
+  -v /path/to/downloads:/var/lib/rtorrent/downloads  \
+  --restart unless-stopped \
+  snowdreamtech/rtorrent:flood-latest
 ```
 
+## Docker Compose
+
 ```bash
-docker run -e TZ=Asia/Shanghai --rm snowdreamtech/rtorrent:latest
+version: "3"
+
+services:
+  rtorrent:
+    image: snowdreamtech/rtorrent:flood-latest
+    container_name: rtorrent
+    environment:
+      - TZ=Etc/UTC 
+      - RTORRENT_PORT=50000 
+      - FLOOD_AUTH=default 
+      - FLOOD_PORT=3000 
+    volumes:
+      - /path/to/config:/var/lib/rtorrent/config #optional
+      - /path/to/downloads:/var/lib/rtorrent/downloads 
+    ports:
+      - 3000:3000
+      - 50000:50000
+      - 50000:50000/udp
+    restart: unless-stopped
 ```
 
 # Development
