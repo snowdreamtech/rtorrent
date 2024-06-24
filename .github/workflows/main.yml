@@ -53,11 +53,11 @@ jobs:
             push: true
             tags: |
               snowdreamtech/rtorrent:latest
-              snowdreamtech/rtorrent:3.20.0
-              snowdreamtech/rtorrent:3.20
-              snowdreamtech/rtorrent:3
+              snowdreamtech/rtorrent:0.9.8
+              snowdreamtech/rtorrent:0.9
+              snowdreamtech/rtorrent:0
               ghcr.io/snowdreamtech/rtorrent:latest
-              ghcr.io/snowdreamtech/rtorrent:3.20.0
-              ghcr.io/snowdreamtech/rtorrent:3.20
-              ghcr.io/snowdreamtech/rtorrent:3
+              ghcr.io/snowdreamtech/rtorrent:0.9.8
+              ghcr.io/snowdreamtech/rtorrent:0.9
+              ghcr.io/snowdreamtech/rtorrent:0
              
