@@ -15,6 +15,8 @@ RUN apk add --no-cache rtorrent \
     ffmpeg \
     mediainfo \ 
     python3 \ 
+    py3-pip \ 
+    py3-setuptools \ 
     php82 \
     php82-fpm \
     php82-cgi \
@@ -23,6 +25,7 @@ RUN apk add --no-cache rtorrent \
     php82-dom \
     php82-xml \ 
     php82-mbstring \
+    && pip install cloudscraper \
     && mkdir -p /var/lib/rtorrent/  \
     && adduser -h /var/lib/rtorrent/ -s /sbin/nologin -g rtorrent -D rtorrent >/dev/null 2>&1 \
     && mkdir -p /var/lib/rtorrent/config/  \

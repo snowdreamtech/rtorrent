@@ -43,11 +43,12 @@ sed -i "s|;*post_max_size =.*|post_max_size = ${PHP_MAX_POST}|i" /etc/php82/php.
 sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= ${PHP_CGI_FIX_PATHINFO}|i" /etc/php82/php.ini
 
 # Rutorrent
-sed -i "s|		\"php\"	=>.*|		\"php\"	=> \"/usr/bin/php82\",			// Something like /usr/bin/php. If empty, will be found in PATH.|i" /etc/php82/php.ini
-sed -i "s|		\"curl\"	=>.*|		\"curl\"	=> \"/usr/bin/curl\",			// Something like /usr/bin/php. If empty, will be found in PATH.|i" /etc/php82/php.ini
-sed -i "s|		\"gzip\"	=>.*|		\"gzip\"	=> \"/bin/gzip\",			// Something like /usr/bin/php. If empty, will be found in PATH.|i" /etc/php82/php.ini
-sed -i "s|		\"id\"	=>.*|		\"id\"	=> \"/usr/bin/id\",			// Something like /usr/bin/php. If empty, will be found in PATH.|i" /etc/php82/php.ini
-sed -i "s|		\"stat\"	=>.*|		\"stat\"	=> \"/bin/stat\",			// Something like /usr/bin/php. If empty, will be found in PATH.|i" /etc/php82/php.ini
+sed -i "s|\$pathToExternals = array(|\$pathToExternals = array(\n\t\t\"python\"\t=> \"/usr/bin/python\",\t\t\t// Something like /usr/bin/python. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\t\t\"php\"\t=>.*|\t\t\"php\"\t=> \"/usr/bin/php82\",\t\t\t// Something like /usr/bin/php. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\t\t\"curl\"\t=>.*|\t\t\"curl\"\t=> \"/usr/bin/curl\",\t\t\t// Something like /usr/bin/php. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\t\t\"gzip\"\t=>.*|\t\t\"gzip\"\t=> \"/bin/gzip\",\t\t\t// Something like /usr/bin/php. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\t\t\"id\"\t=>.*|\t\t\"id\"\t=> \"/usr/bin/id\",\t\t\t// Something like /usr/bin/php. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\t\t\"stat\"\t=>.*|\t\t\"stat\"\t=> \"/bin/stat\",\t\t\t// Something like /usr/bin/php. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
 
 
 # phpinfo for test
