@@ -4,11 +4,20 @@ LABEL maintainer="snowdream <sn0wdr1am@qq.com>"
 
 ENV RTORRENT_HOST=localhost \
     RTORRENT_PORT=50000 \
-    RTORRENT_SOCKET="/var/lib/rtorrent/.session/rtorrent.sock" 
+    RTORRENT_SOCKET="/var/lib/rtorrent/.session/rtorrent.sock" \
+    RUTORRENT_VERSION=4.3.5
 
 RUN apk add --no-cache rtorrent \
     screen \
     nginx \
+    curl \ 
+    php82-fpm \
+    php82-cgi \
+    php82-common \ 
+    php82-gd \ 
+    php82-dom \
+    php82-xml \ 
+    php82-mbstring \
     && mkdir -p /var/lib/rtorrent/  \
     && adduser -h /var/lib/rtorrent/ -s /sbin/nologin -g rtorrent -D rtorrent >/dev/null 2>&1 \
     && mkdir -p /var/lib/rtorrent/config/  \
@@ -16,7 +25,11 @@ RUN apk add --no-cache rtorrent \
     && mkdir -p /var/lib/rtorrent/download/  \
     && mkdir -p /var/lib/rtorrent/watch/  \
     && mkdir -p /var/lib/rtorrent/log/  \
-    && chown -R  rtorrent:rtorrent /var/lib/rtorrent 
+    && chown -R  rtorrent:rtorrent /var/lib/rtorrent \
+    && wget https://github.com/Novik/ruTorrent/archive/refs/tags/v${RUTORRENT_VERSION}.tar.gz \ 
+    && tar zxvf v${RUTORRENT_VERSION}.tar.gz  \ 
+    && mv ruTorrent-${RUTORRENT_VERSION} /var/lib/nginx/html/rutorrent  \ 
+    && chown -Rfv nginx:nginx /var/lib/nginx/html
 
 COPY http.d /etc/nginx/http.d
 
