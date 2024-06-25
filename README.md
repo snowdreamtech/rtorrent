@@ -20,7 +20,7 @@ docker run -d \
   -v /path/to/config:/var/lib/rtorrent/config \
   -v /path/to/downloads:/var/lib/rtorrent/downloads  \
   --restart unless-stopped \
-  snowdreamtech/rtorrent:latest
+  snowdreamtech/rtorrent:ruTorrent-latest
 ```
 
 ## Docker Compose
@@ -30,7 +30,7 @@ version: "3"
 
 services:
   rtorrent:
-    image: snowdreamtech/rtorrent:latest
+    image: snowdreamtech/rtorrent:ruTorrent-latest
     container_name: rtorrent
     environment:
       - TZ=Etc/UTC 
