@@ -54,6 +54,14 @@ sed -i "s|\t\t\"stat\"\t=>.*|\t\t\"stat\"\t=> \"/bin/stat\",\t\t\t// Something l
 sed -i "s|\$localHostedMode.*|\$localHostedMode = true;\t\t\t// Set to true if rTorrent is hosted on the SAME machine as ruTorrent|i" /var/lib/nginx/html/rutorrent/conf/config.php
 sed -i "s|\$cachedPluginLoading.*|\$cachedPluginLoading = true;\t\t\t// Set to true to enable rapid cached loading of ruTorrent plugins|i" /var/lib/nginx/html/rutorrent/conf/config.php
 
+# use unix socket for rpc2
+sed -i "s|\$scgi_port = 5000;|// \$scgi_port = 5000;|i" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\$scgi_host = \"127.0.0.1\";|// \$scgi_host = \"127.0.0.1\";|i" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|// \$scgi_port = 0;|\$scgi_port = 0;|i" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|// \$scgi_host = \"unix:///tmp/rpc.socket\";|\$scgi_host = \"unix:///var/lib/rtorrent/.session/rtorrent.sock\";|i" /var/lib/nginx/html/rutorrent/conf/config.php
+touch /var/lib/rtorrent/.session/rtorrent.sock && chmod 777 /var/lib/rtorrent/.session/rtorrent.sock
+
+
 # /var/lib/nginx/html/rutorrent/conf/plugins.ini
 echo -e "\n[unpack]\nenabled = no" >> /var/lib/nginx/html/rutorrent/conf/plugins.ini
 echo -e "\n[_cloudflare]\nenabled = no" >> /var/lib/nginx/html/rutorrent/conf/plugins.ini
