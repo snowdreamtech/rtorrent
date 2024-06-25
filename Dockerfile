@@ -26,6 +26,7 @@ RUN apk add --no-cache rtorrent \
     php82-dom \
     php82-xml \ 
     php82-mbstring \
+    php82-session \
     && python3 -m venv $HOME/.venv \
     && . $HOME/.venv/bin/activate \
     && pip install cloudscraper \
