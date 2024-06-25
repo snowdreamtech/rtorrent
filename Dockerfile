@@ -5,7 +5,8 @@ LABEL maintainer="snowdream <sn0wdr1am@qq.com>"
 ENV RTORRENT_HOST=localhost \
     RTORRENT_PORT=50000 \
     RTORRENT_SOCKET="/var/lib/rtorrent/.session/rtorrent.sock" \
-    RUTORRENT_VERSION=4.3.5
+    RUTORRENT_VERSION=4.3.5 \
+    PYTHONPATH="/root/.venv/lib/python3.12/site-packages"
 
 RUN apk add --no-cache rtorrent \
     screen \

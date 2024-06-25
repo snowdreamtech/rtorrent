@@ -45,6 +45,7 @@ sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= ${PHP_CGI_FIX_PATHINFO}|i" /et
 # Rutorrent
 # /var/lib/nginx/html/rutorrent/conf/config.php
 sed -i "s|\$pathToExternals = array(|\$pathToExternals = array(\n\t\t\"python\"\t=> \"/usr/bin/python\",\t\t\t// Something like /usr/bin/python. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\$pathToExternals = array(|\$pathToExternals = array(\n\t\t\"pgrep\"\t=> \"/usr/bin/pgrep\",\t\t\t// Something like /usr/bin/pgrep. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
 sed -i "s|\t\t\"php\"\t=>.*|\t\t\"php\"\t=> \"/usr/bin/php82\",\t\t\t// Something like /usr/bin/php. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
 sed -i "s|\t\t\"curl\"\t=>.*|\t\t\"curl\"\t=> \"/usr/bin/curl\",\t\t\t// Something like /usr/bin/php. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
 sed -i "s|\t\t\"gzip\"\t=>.*|\t\t\"gzip\"\t=> \"/bin/gzip\",\t\t\t// Something like /usr/bin/php. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
