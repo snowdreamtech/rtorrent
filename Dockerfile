@@ -25,6 +25,8 @@ RUN apk add --no-cache rtorrent \
     php82-dom \
     php82-xml \ 
     php82-mbstring \
+    && python3 -m venv $HOME/.venv \
+    && . $HOME/.venv/bin/activate \
     && pip install cloudscraper \
     && mkdir -p /var/lib/rtorrent/  \
     && adduser -h /var/lib/rtorrent/ -s /sbin/nologin -g rtorrent -D rtorrent >/dev/null 2>&1 \
@@ -37,6 +39,7 @@ RUN apk add --no-cache rtorrent \
     && wget https://github.com/Novik/ruTorrent/archive/refs/tags/v${RUTORRENT_VERSION}.tar.gz \ 
     && tar zxvf v${RUTORRENT_VERSION}.tar.gz  \ 
     && mv ruTorrent-${RUTORRENT_VERSION} /var/lib/nginx/html/rutorrent  \ 
+    && rm -rfv v${RUTORRENT_VERSION}.tar.gz  \
     && chown -Rfv nginx:nginx /var/lib/nginx/html
 
 COPY http.d /etc/nginx/http.d
