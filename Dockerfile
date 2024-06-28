@@ -27,9 +27,8 @@ RUN apk add --no-cache rtorrent \
     php82-xml \ 
     php82-mbstring \
     php82-session \
-    && python3 -m venv $HOME/.venv \
-    && . $HOME/.venv/bin/activate \
-    && pip install cloudscraper \
+    && pip3 install --upgrade --break-system-packages pip \
+    && pip3 install --break-system-packages cfscrape cloudscraper \
     && mkdir -p /var/lib/rtorrent/  \
     && adduser -h /var/lib/rtorrent/ -s /sbin/nologin -g rtorrent -D rtorrent >/dev/null 2>&1 \
     && mkdir -p /var/lib/rtorrent/config/  \

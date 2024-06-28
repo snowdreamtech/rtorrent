@@ -64,7 +64,6 @@ touch /var/lib/rtorrent/.session/rtorrent.sock && chmod 777 /var/lib/rtorrent/.s
 
 # /var/lib/nginx/html/rutorrent/conf/plugins.ini
 echo -e "\n[unpack]\nenabled = no" >> /var/lib/nginx/html/rutorrent/conf/plugins.ini
-echo -e "\n[_cloudflare]\nenabled = no" >> /var/lib/nginx/html/rutorrent/conf/plugins.ini
 
 # phpinfo for test
 echo "<?php

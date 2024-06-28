@@ -15,6 +15,8 @@ docker run -d \
   --name=rtorrent \
   -e TZ=Etc/UTC \
   -e RTORRENT_PORT=50000 \
+  -p 80:80 \
+  -p 443:443 \
   -p 50000:50000 \
   -p 50000:50000/udp \
   -v /path/to/config:/var/lib/rtorrent/config \
@@ -39,6 +41,8 @@ services:
       - /path/to/config:/var/lib/rtorrent/config #optional
       - /path/to/downloads:/var/lib/rtorrent/downloads 
     ports:
+      - 80:80
+      - 443:443
       - 50000:50000
       - 50000:50000/udp
     restart: unless-stopped
