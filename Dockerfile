@@ -1,5 +1,6 @@
 FROM snowdreamtech/build-essential:3.20.0 AS builder
 
+ARG TARGETPLATFORM
 ENV UNRAR_VERSION=7.0.9
 
 RUN mkdir /workspace
@@ -7,8 +8,9 @@ WORKDIR /workspace
 RUN wget https://www.rarlab.com/rar/unrarsrc-${UNRAR_VERSION}.tar.gz \ 
     && tar zxvf unrarsrc-${UNRAR_VERSION}.tar.gz \ 
     && cd unrar \ 
+    && if [[ "$TARGETPLATFORM" == "linux/ppc64le" ]] ; then sed -i "s|-march=native|-mcpu=native -mtune=native|i" ./makefile ; fi \ 
     && make \
-    && chmod 755 unrar
+    && chmod 755 unrar 
     
     
 FROM snowdreamtech/alpine:3.20.0
