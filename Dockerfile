@@ -1,3 +1,16 @@
+FROM snowdreamtech/build-essential:3.20.0 AS builder
+
+ENV UNRAR_VERSION=7.0.9
+
+RUN mkdir /workspace
+WORKDIR /workspace
+RUN wget https://www.rarlab.com/rar/unrarsrc-${UNRAR_VERSION}.tar.gz \ 
+    && tar zxvf unrarsrc-${UNRAR_VERSION}.tar.gz \ 
+    && cd unrar \ 
+    && make \
+    && chmod 755 unrar
+    
+    
 FROM snowdreamtech/alpine:3.20.0
 
 LABEL maintainer="snowdream <sn0wdr1am@qq.com>"
@@ -15,6 +28,7 @@ RUN apk add --no-cache rtorrent \
     sox \ 
     ffmpeg \
     mediainfo \ 
+    unzip \
     python3 \ 
     py3-pip \ 
     py3-setuptools \ 
@@ -46,6 +60,8 @@ RUN apk add --no-cache rtorrent \
 COPY http.d /etc/nginx/http.d
 
 COPY config /var/lib/rtorrent/config
+
+COPY --from=builder /workspace/unrar/unrar /usr/bin
 
 EXPOSE 80 443 50000/tcp 50000/udp
 

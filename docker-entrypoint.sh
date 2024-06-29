@@ -44,6 +44,8 @@ sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= ${PHP_CGI_FIX_PATHINFO}|i" /et
 
 # Rutorrent
 # /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\$pathToExternals = array(|\$pathToExternals = array(\n\t\t\"unrar\"\t=> \"/usr/bin/unrar\",\t\t\t// Something like /usr/bin/unrar. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\$pathToExternals = array(|\$pathToExternals = array(\n\t\t\"unzip\"\t=> \"/usr/bin/unzip\",\t\t\t// Something like /usr/bin/unzip. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
 sed -i "s|\$pathToExternals = array(|\$pathToExternals = array(\n\t\t\"python\"\t=> \"/usr/bin/python\",\t\t\t// Something like /usr/bin/python. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
 sed -i "s|\$pathToExternals = array(|\$pathToExternals = array(\n\t\t\"pgrep\"\t=> \"/usr/bin/pgrep\",\t\t\t// Something like /usr/bin/pgrep. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
 sed -i "s|\t\t\"php\"\t=>.*|\t\t\"php\"\t=> \"/usr/bin/php82\",\t\t\t// Something like /usr/bin/php. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
@@ -63,7 +65,8 @@ touch /var/lib/rtorrent/.session/rtorrent.sock && chmod 777 /var/lib/rtorrent/.s
 
 
 # /var/lib/nginx/html/rutorrent/conf/plugins.ini
-echo -e "\n[unpack]\nenabled = no" >> /var/lib/nginx/html/rutorrent/conf/plugins.ini
+# echo -e "\n[unpack]\nenabled = no" >> /var/lib/nginx/html/rutorrent/conf/plugins.ini
+# echo -e "\n[_cloudflare]\nenabled = no" >> /var/lib/nginx/html/rutorrent/conf/plugins.ini
 
 # phpinfo for test
 echo "<?php
