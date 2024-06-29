@@ -33,34 +33,34 @@ sed -i "s|group\s*=\s*nobody|group = ${PHP_FPM_GROUP}|g" /etc/php82/php-fpm.d/ww
 sed -i "s|;log_level\s*=\s*notice|log_level = notice|g" /etc/php82/php-fpm.d/www.conf #uncommenting line 
 
 # Modifying configuration file php.ini
-sed -i "s|display_errors\s*=\s*Off|display_errors = ${PHP_DISPLAY_ERRORS}|i" /etc/php82/php.ini
-sed -i "s|display_startup_errors\s*=\s*Off|display_startup_errors = ${PHP_DISPLAY_STARTUP_ERRORS}|i" /etc/php82/php.ini
-sed -i "s|error_reporting\s*=\s*E_ALL & ~E_DEPRECATED & ~E_STRICT|error_reporting = ${PHP_ERROR_REPORTING}|i" /etc/php82/php.ini
-sed -i "s|;*memory_limit =.*|memory_limit = ${PHP_MEMORY_LIMIT}|i" /etc/php82/php.ini
-sed -i "s|;*upload_max_filesize =.*|upload_max_filesize = ${PHP_MAX_UPLOAD}|i" /etc/php82/php.ini
-sed -i "s|;*max_file_uploads =.*|max_file_uploads = ${PHP_MAX_FILE_UPLOAD}|i" /etc/php82/php.ini
-sed -i "s|;*post_max_size =.*|post_max_size = ${PHP_MAX_POST}|i" /etc/php82/php.ini
-sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= ${PHP_CGI_FIX_PATHINFO}|i" /etc/php82/php.ini
+sed -i "s|display_errors\s*=\s*Off|display_errors = ${PHP_DISPLAY_ERRORS}|g" /etc/php82/php.ini
+sed -i "s|display_startup_errors\s*=\s*Off|display_startup_errors = ${PHP_DISPLAY_STARTUP_ERRORS}|g" /etc/php82/php.ini
+sed -i "s|error_reporting\s*=\s*E_ALL & ~E_DEPRECATED & ~E_STRICT|error_reporting = ${PHP_ERROR_REPORTING}|g" /etc/php82/php.ini
+sed -i "s|;*memory_limit =.*|memory_limit = ${PHP_MEMORY_LIMIT}|g" /etc/php82/php.ini
+sed -i "s|;*upload_max_filesize =.*|upload_max_filesize = ${PHP_MAX_UPLOAD}|g" /etc/php82/php.ini
+sed -i "s|;*max_file_uploads =.*|max_file_uploads = ${PHP_MAX_FILE_UPLOAD}|g" /etc/php82/php.ini
+sed -i "s|;*post_max_size =.*|post_max_size = ${PHP_MAX_POST}|g" /etc/php82/php.ini
+sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= ${PHP_CGI_FIX_PATHINFO}|g" /etc/php82/php.ini
 
 # Rutorrent
 # /var/lib/nginx/html/rutorrent/conf/config.php
-sed -i "s|\$pathToExternals = array(|\$pathToExternals = array(\n\t\t\"unrar\"\t=> \"/usr/bin/unrar\",\t\t\t// Something like /usr/bin/unrar. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
-sed -i "s|\$pathToExternals = array(|\$pathToExternals = array(\n\t\t\"unzip\"\t=> \"/usr/bin/unzip\",\t\t\t// Something like /usr/bin/unzip. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
-sed -i "s|\$pathToExternals = array(|\$pathToExternals = array(\n\t\t\"python\"\t=> \"/usr/bin/python\",\t\t\t// Something like /usr/bin/python. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
-sed -i "s|\$pathToExternals = array(|\$pathToExternals = array(\n\t\t\"pgrep\"\t=> \"/usr/bin/pgrep\",\t\t\t// Something like /usr/bin/pgrep. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
-sed -i "s|\t\t\"php\"\t=>.*|\t\t\"php\"\t=> \"/usr/bin/php82\",\t\t\t// Something like /usr/bin/php. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
-sed -i "s|\t\t\"curl\"\t=>.*|\t\t\"curl\"\t=> \"/usr/bin/curl\",\t\t\t// Something like /usr/bin/php. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
-sed -i "s|\t\t\"gzip\"\t=>.*|\t\t\"gzip\"\t=> \"/bin/gzip\",\t\t\t// Something like /usr/bin/php. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
-sed -i "s|\t\t\"id\"\t=>.*|\t\t\"id\"\t=> \"/usr/bin/id\",\t\t\t// Something like /usr/bin/php. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
-sed -i "s|\t\t\"stat\"\t=>.*|\t\t\"stat\"\t=> \"/bin/stat\",\t\t\t// Something like /usr/bin/php. If empty, will be found in PATH.|i" /var/lib/nginx/html/rutorrent/conf/config.php
-sed -i "s|\$localHostedMode.*|\$localHostedMode = true;\t\t\t// Set to true if rTorrent is hosted on the SAME machine as ruTorrent|i" /var/lib/nginx/html/rutorrent/conf/config.php
-sed -i "s|\$cachedPluginLoading.*|\$cachedPluginLoading = true;\t\t\t// Set to true to enable rapid cached loading of ruTorrent plugins|i" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\$pathToExternals = array(|\$pathToExternals = array(\n\t\t\"unrar\"\t=> \"/usr/bin/unrar\",\t\t\t// Something like /usr/bin/unrar. If empty, will be found in PATH.|g" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\$pathToExternals = array(|\$pathToExternals = array(\n\t\t\"unzip\"\t=> \"/usr/bin/unzip\",\t\t\t// Something like /usr/bin/unzip. If empty, will be found in PATH.|g" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\$pathToExternals = array(|\$pathToExternals = array(\n\t\t\"python\"\t=> \"/usr/bin/python\",\t\t\t// Something like /usr/bin/python. If empty, will be found in PATH.|g" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\$pathToExternals = array(|\$pathToExternals = array(\n\t\t\"pgrep\"\t=> \"/usr/bin/pgrep\",\t\t\t// Something like /usr/bin/pgrep. If empty, will be found in PATH.|g" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\t\t\"php\"\t=>.*|\t\t\"php\"\t=> \"/usr/bin/php82\",\t\t\t// Something like /usr/bin/php. If empty, will be found in PATH.|g" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\t\t\"curl\"\t=>.*|\t\t\"curl\"\t=> \"/usr/bin/curl\",\t\t\t// Something like /usr/bin/php. If empty, will be found in PATH.|g" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\t\t\"gzip\"\t=>.*|\t\t\"gzip\"\t=> \"/bin/gzip\",\t\t\t// Something like /usr/bin/php. If empty, will be found in PATH.|g" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\t\t\"id\"\t=>.*|\t\t\"id\"\t=> \"/usr/bin/id\",\t\t\t// Something like /usr/bin/php. If empty, will be found in PATH.|g" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\t\t\"stat\"\t=>.*|\t\t\"stat\"\t=> \"/bin/stat\",\t\t\t// Something like /usr/bin/php. If empty, will be found in PATH.|g" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\$localHostedMode.*|\$localHostedMode = true;\t\t\t// Set to true if rTorrent is hosted on the SAME machine as ruTorrent|g" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\$cachedPluginLoading.*|\$cachedPluginLoading = true;\t\t\t// Set to true to enable rapid cached loading of ruTorrent plugins|g" /var/lib/nginx/html/rutorrent/conf/config.php
 
 # use unix socket for rpc2
-sed -i "s|\$scgi_port = 5000;|// \$scgi_port = 5000;|i" /var/lib/nginx/html/rutorrent/conf/config.php
-sed -i "s|\$scgi_host = \"127.0.0.1\";|// \$scgi_host = \"127.0.0.1\";|i" /var/lib/nginx/html/rutorrent/conf/config.php
-sed -i "s|// \$scgi_port = 0;|\$scgi_port = 0;|i" /var/lib/nginx/html/rutorrent/conf/config.php
-sed -i "s|// \$scgi_host = \"unix:///tmp/rpc.socket\";|\$scgi_host = \"unix:///var/lib/rtorrent/.session/rtorrent.sock\";|i" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\$scgi_port = 5000;|// \$scgi_port = 5000;|g" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|\$scgi_host = \"127.0.0.1\";|// \$scgi_host = \"127.0.0.1\";|g" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|// \$scgi_port = 0;|\$scgi_port = 0;|g" /var/lib/nginx/html/rutorrent/conf/config.php
+sed -i "s|// \$scgi_host = \"unix:///tmp/rpc.socket\";|\$scgi_host = \"unix:///var/lib/rtorrent/.session/rtorrent.sock\";|g" /var/lib/nginx/html/rutorrent/conf/config.php
 touch /var/lib/rtorrent/.session/rtorrent.sock && chmod 777 /var/lib/rtorrent/.session/rtorrent.sock
 
 
