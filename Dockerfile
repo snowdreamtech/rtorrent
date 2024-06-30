@@ -12,7 +12,6 @@ RUN LONG_BIT=`getconf LONG_BIT` \
     && sed -i "s|CXX=c++|CXX?=c++|g" ./makefile \
     && sed -i "s|CXXFLAGS=.*|CXXFLAGS=-march=native\nCXXFLAGS?=-O2\nCXXFLAGS+=-std=c++11 -Wno-logical-op-parentheses -Wno-switch -Wno-dangling-else|g" ./makefile \
     && if [[ "${LONG_BIT}" == "64" ]] ; then sed -i "s|-march=native|-march=native -m64|g" ./makefile ; fi \ 
-    && if [[ "${LONG_BIT}" == "32" ]] ; then sed -i "s|-march=native|-march=native -m32|g" ./makefile ; fi \ 
     && if [[ "${TARGETPLATFORM}" == "linux/ppc64le" ]] ; then sed -i "s|-march=native|-mcpu=native -mtune=native|g" ./makefile ; fi \ 
     && sed -i "s|LDFLAGS=-pthread|LDFLAGS+=-pthread|g" ./makefile \
     && make \
