@@ -6,7 +6,7 @@ ENV RTORRENT_HOST=localhost \
     RTORRENT_PORT=50000 \
     RTORRENT_SOCKET="/var/lib/rtorrent/.session/rtorrent.sock" 
 
-RUN apk add --no-cache rtorrent \
+RUN apk add --no-cache rtorrent=0.9.8-r2 \
     screen \
     && mkdir -p /var/lib/rtorrent/  \
     && adduser -h /var/lib/rtorrent/ -s /sbin/nologin -g rtorrent -D rtorrent >/dev/null 2>&1 \
