@@ -2,9 +2,9 @@ FROM snowdreamtech/alpine:3.20.0
 
 LABEL maintainer="snowdream <sn0wdr1am@qq.com>"
 
-ENV RTORRENT_HOST=localhost \
-    RTORRENT_PORT=50000 \
-    RTORRENT_SOCKET="/var/lib/rtorrent/.session/rtorrent.sock" 
+ENV RPC_HOST=localhost \
+    RPC_PORT=50000 \
+    RPC_SOCKET="/var/lib/rtorrent/.session/rtorrent.sock" 
 
 RUN apk add --no-cache rtorrent=0.9.8-r2 \
     screen \

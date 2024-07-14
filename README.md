@@ -14,7 +14,7 @@ To help you get started creating a container from this image you can either use 
 docker run -d \
   --name=rtorrent \
   -e TZ=Etc/UTC \
-  -e RTORRENT_PORT=50000 \
+  -e RPC_PORT=50000 \
   -p 50000:50000 \
   -p 50000:50000/udp \
   -v /path/to/config:/var/lib/rtorrent/config \
@@ -34,7 +34,7 @@ services:
     container_name: rtorrent
     environment:
       - TZ=Etc/UTC 
-      - RTORRENT_PORT=50000 
+      - RPC_PORT=50000 
     volumes:
       - /path/to/config:/var/lib/rtorrent/config #optional
       - /path/to/downloads:/var/lib/rtorrent/downloads 
