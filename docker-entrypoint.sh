@@ -1,9 +1,9 @@
 #!/bin/sh
 set -e
 
-# set RTORRENT_PORT
-if [ -n "${RTORRENT_PORT}" ]; then
-    sed -i "s/network\.port_range\.set.*/network\.port_range\.set = ""${RTORRENT_PORT}""-""${RTORRENT_PORT}""/g" /var/lib/rtorrent/config/rtorrent.rc
+# set RPC_PORT
+if [ -n "${RPC_PORT}" ]; then
+    sed -i "s/network\.port_range\.set.*/network\.port_range\.set = ""${RPC_PORT}""-""${RPC_PORT}""/g" /var/lib/rtorrent/config/rtorrent.rc
 fi
 
 # rtorrent
@@ -11,9 +11,9 @@ fi
 
 # flood
 if [ "${FLOOD_AUTH}" == "default" ]; then
-    flood --host 0.0.0.0 --port "${FLOOD_PORT}" --auth default --rtsocket "${RTORRENT_SOCKET}" >/dev/null 2>&1 
+    flood --host 0.0.0.0 --port "${FLOOD_PORT}" --auth default
 else
-    flood --host 0.0.0.0 --port "${FLOOD_PORT}" --auth none --rtsocket "${RTORRENT_SOCKET}" >/dev/null 2>&1 
+    flood --host 0.0.0.0 --port "${FLOOD_PORT}" --auth none --rtsocket "${RPC_SOCKET}" >/dev/null 2>&1 
 fi
 
 # exec commands

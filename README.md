@@ -14,7 +14,7 @@ To help you get started creating a container from this image you can either use 
 docker run -d \
   --name=rtorrent \
   -e TZ=Etc/UTC \
-  -e RTORRENT_PORT=50000 \
+  -e RPC_PORT=50000 \
   -e FLOOD_AUTH=default \
   -e FLOOD_PORT=3000 \
   -p 3000:3000 \
@@ -37,7 +37,7 @@ services:
     container_name: rtorrent
     environment:
       - TZ=Etc/UTC 
-      - RTORRENT_PORT=50000 
+      - RPC_PORT=50000 
       - FLOOD_AUTH=default 
       - FLOOD_PORT=3000 
     volumes:
