@@ -20,9 +20,9 @@ FROM snowdreamtech/alpine:3.20.0
 
 LABEL maintainer="snowdream <sn0wdr1am@qq.com>"
 
-ENV RTORRENT_HOST=localhost \
-    RTORRENT_PORT=50000 \
-    RTORRENT_SOCKET="/var/lib/rtorrent/.session/rtorrent.sock" \
+ENV RPC_HOST=localhost \
+    RPC_PORT=50000 \
+    RPC_SOCKET="/var/lib/rtorrent/.session/rtorrent.sock" \
     RUTORRENT_VERSION=4.3.5 \
     PYTHONPATH="/root/.venv/lib/python3.12/site-packages"
 

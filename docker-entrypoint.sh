@@ -1,9 +1,9 @@
 #!/bin/sh
 set -e
 
-# set RTORRENT_PORT
-if [ -n "${RTORRENT_PORT}" ]; then
-    sed -i "s/network\.port_range\.set.*/network\.port_range\.set = ""${RTORRENT_PORT}""-""${RTORRENT_PORT}""/g" /var/lib/rtorrent/config/rtorrent.rc
+# set RPC_PORT
+if [ -n "${RPC_PORT}" ]; then
+    sed -i "s/network\.port_range\.set.*/network\.port_range\.set = ""${RPC_PORT}""-""${RPC_PORT}""/g" /var/lib/rtorrent/config/rtorrent.rc
 fi
 
 # PHP
