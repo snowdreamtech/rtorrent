@@ -26,7 +26,7 @@ ENV RTORRENT_HOST=localhost \
     RUTORRENT_VERSION=4.3.5 \
     PYTHONPATH="/root/.venv/lib/python3.12/site-packages"
 
-RUN apk add --no-cache rtorrent \
+RUN apk add --no-cache rtorrent=0.9.8-r2 \
     screen \
     nginx \
     curl \ 
