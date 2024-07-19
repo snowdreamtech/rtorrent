@@ -13,7 +13,7 @@ fi
 if [ "${FLOOD_AUTH}" == "default" ]; then
     flood --host 0.0.0.0 --port "${FLOOD_PORT}" --auth default
 else
-    flood --host 0.0.0.0 --port "${FLOOD_PORT}" --auth none --rtsocket "${RPC_SOCKET}" >/dev/null 2>&1 
+    flood --host 0.0.0.0 --port "${FLOOD_PORT}" --auth none --rtsocket "${RPC_SOCKET}" >/dev/null 2>&1
 fi
 
 # exec commands
