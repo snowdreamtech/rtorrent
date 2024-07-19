@@ -3,13 +3,13 @@ name: GitHub Actions Continuous Delivery
 on:
   push:
     branches:
-      - main  
+      - ruTorrent  
     tags:
       - '*'
   workflow_dispatch:
 jobs:
     buildx:
-      runs-on: 1H1G
+      runs-on: ubuntu-latest
       steps:
         -
           name: Checkout
