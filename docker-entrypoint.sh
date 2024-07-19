@@ -30,7 +30,7 @@ sed -i "s|;listen.group\s*=\s*nobody|listen.group = ${PHP_FPM_GROUP}|g" /etc/php
 sed -i "s|;listen.mode\s*=\s*0660|listen.mode = ${PHP_FPM_LISTEN_MODE}|g" /etc/php82/php-fpm.d/www.conf
 sed -i "s|user\s*=\s*nobody|user = ${PHP_FPM_USER}|g" /etc/php82/php-fpm.d/www.conf
 sed -i "s|group\s*=\s*nobody|group = ${PHP_FPM_GROUP}|g" /etc/php82/php-fpm.d/www.conf
-sed -i "s|;log_level\s*=\s*notice|log_level = notice|g" /etc/php82/php-fpm.d/www.conf #uncommenting line 
+sed -i "s|;log_level\s*=\s*notice|log_level = notice|g" /etc/php82/php-fpm.d/www.conf #uncommenting line
 
 # Modifying configuration file php.ini
 sed -i "s|display_errors\s*=\s*Off|display_errors = ${PHP_DISPLAY_ERRORS}|g" /etc/php82/php.ini
@@ -63,7 +63,6 @@ sed -i "s|// \$scgi_port = 0;|\$scgi_port = 0;|g" /var/lib/nginx/html/rutorrent/
 sed -i "s|// \$scgi_host = \"unix:///tmp/rpc.socket\";|\$scgi_host = \"unix:///var/lib/rtorrent/.session/rtorrent.sock\";|g" /var/lib/nginx/html/rutorrent/conf/config.php
 touch /var/lib/rtorrent/.session/rtorrent.sock && chmod 777 /var/lib/rtorrent/.session/rtorrent.sock
 
-
 # /var/lib/nginx/html/rutorrent/conf/plugins.ini
 # echo -e "\n[unpack]\nenabled = no" >> /var/lib/nginx/html/rutorrent/conf/plugins.ini
 # echo -e "\n[_cloudflare]\nenabled = no" >> /var/lib/nginx/html/rutorrent/conf/plugins.ini
@@ -71,7 +70,7 @@ touch /var/lib/rtorrent/.session/rtorrent.sock && chmod 777 /var/lib/rtorrent/.s
 # phpinfo for test
 echo "<?php
 	phpinfo();
-?>"> /var/lib/nginx/html/phpinfo.php
+?>" >/var/lib/nginx/html/phpinfo.php
 
 # PHP-fpm
 php-fpm82 --fpm-config /etc/php82/php-fpm.conf
