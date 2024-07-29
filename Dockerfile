@@ -1,4 +1,4 @@
-FROM snowdreamtech/build-essential:3.20.0 AS builder
+FROM snowdreamtech/build-essential:3.20.2 AS builder
 
 ARG TARGETPLATFORM
 ENV UNRAR_VERSION=7.0.9
@@ -16,7 +16,7 @@ RUN wget https://www.rarlab.com/rar/unrarsrc-${UNRAR_VERSION}.tar.gz \
     && chmod 755 unrar 
 
 
-FROM snowdreamtech/alpine:3.20.0
+FROM snowdreamtech/alpine:3.20.2
 
 LABEL maintainer="snowdream <sn0wdr1am@qq.com>"
 
