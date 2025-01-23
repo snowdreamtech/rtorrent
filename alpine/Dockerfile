@@ -16,7 +16,11 @@ LABEL org.opencontainers.image.authors="Snowdream Tech" \
 ENV KEEPALIVE=1 \
     # The cap_net_bind_service capability in Linux allows a process to bind a socket to Internet domain privileged ports, 
     # which are port numbers less than 1024. 
-    CAP_NET_BIND_SERVICE=0 
+    CAP_NET_BIND_SERVICE=0
+
+ENV RPC_HOST=localhost \
+    RPC_PORT=50000 \
+    RPC_SOCKET="/var/lib/rtorrent/.session/rtorrent.sock" 
 
 ARG GID=1000 \
     UID=1000  \
@@ -26,7 +30,7 @@ ARG GID=1000 \
 # Create a user with UID and GID
 RUN if [ "${USER}" != "root" ]; then \
     addgroup -g ${GID} ${USER}; \
-    adduser -h /home/${USER} -u ${UID} -g ${USER} -G ${USER} -s /bin/sh -D ${USER}; \
+    adduser -h ${WORKDIR} -u ${UID} -g ${USER} -G ${USER} -s /bin/sh -D ${USER}; \
     # sed -i "/%sudo/c ${USER} ALL=(ALL:ALL) NOPASSWD:ALL" /etc/sudoers; \
     fi
 
@@ -36,8 +40,21 @@ RUN if [ "${USER}" != "root" ] && [ "${CAP_NET_BIND_SERVICE}" -eq 1 ]; then \
     # setcap 'cap_net_bind_service=+ep' `which nginx`; \
     fi
 
-RUN apk add --no-cache \
-    vim
+# Install rtorrent
+RUN apk add --no-cache rtorrent=0.10.0-r0 \
+    screen \
+    && mkdir -p /var/lib/rtorrent/  \
+    && mkdir -p /var/lib/rtorrent/config/  \
+    && mkdir -p /var/lib/rtorrent/.session/  \
+    && mkdir -p /var/lib/rtorrent/download/  \
+    && mkdir -p /var/lib/rtorrent/watch/  \
+    && mkdir -p /var/lib/rtorrent/log/  \
+    # Chown the files to USER
+    && chown -R  ${USER}:${USER} /var/lib/rtorrent \
+    && find / -name "*rtorrent*" -exec chown -Rv ${USER}:${USER} {} \; 
+
+# Copy the config files
+COPY --chown=${USER}:${USER} config /var/lib/rtorrent/config
 
 # Switch to the user
 USER ${USER}
@@ -45,6 +62,8 @@ USER ${USER}
 # Set the workdir
 WORKDIR ${WORKDIR}
 
-COPY docker-entrypoint.sh /usr/local/bin/
+EXPOSE 50000/tcp 50000/udp
+
+COPY --chown=${USER}:${USER} docker-entrypoint.sh /usr/local/bin/
 
 ENTRYPOINT ["docker-entrypoint.sh"]

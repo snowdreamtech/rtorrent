@@ -10,52 +10,37 @@ To help you get started creating a container from this image you can either use 
 
 ## Docker Cli
 
-### Simple
-
 ```bash
 docker run -d \
   --name=rtorrent \
-  -e TZ=Asia/Shanghai \
-  --restart unless-stopped \
-  snowdreamtech/rtorrent:latest
-```
-
-### Advance
-
-```bash
-docker run -d \
-  --name=rtorrent \
-  -e TZ=Asia/Shanghai \
-  -v /path/to/data:/path/to/data \
+  -e TZ=Etc/UTC \
+  -e RPC_PORT=50000 \
+  -p 50000:50000 \
+  -p 50000:50000/udp \
+  -v /path/to/config:/var/lib/rtorrent/config \
+  -v /path/to/downloads:/var/lib/rtorrent/downloads  \
   --restart unless-stopped \
   snowdreamtech/rtorrent:latest
 ```
 
 ## Docker Compose
 
-### Simple
-
 ```bash
+version: "3"
+
 services:
   rtorrent:
     image: snowdreamtech/rtorrent:latest
     container_name: rtorrent
     environment:
-      - TZ=Asia/Shanghai
-    restart: unless-stopped
-```
-
-### Advance
-
-```bash
-services:
-  rtorrent:
-    image: snowdreamtech/rtorrent:latest
-    container_name: rtorrent
-    environment:
-      - TZ=Asia/Shanghai
+      - TZ=Etc/UTC 
+      - RPC_PORT=50000 
     volumes:
-      - /path/to/data:/path/to/data
+      - /path/to/config:/var/lib/rtorrent/config #optional
+      - /path/to/downloads:/var/lib/rtorrent/downloads 
+    ports:
+      - 50000:50000
+      - 50000:50000/udp
     restart: unless-stopped
 ```
 
