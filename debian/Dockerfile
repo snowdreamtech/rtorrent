@@ -18,7 +18,8 @@ ENV KEEPALIVE=1 \
     # which are port numbers less than 1024. 
     CAP_NET_BIND_SERVICE=0
 
-ENV RPC_HOST=localhost \
+ENV RTORRENT_VERSION=0.9.8-1 \
+    RPC_HOST=localhost \
     RPC_PORT=50000 \
     RPC_SOCKET="/var/lib/rtorrent/.session/rtorrent.sock" 
 
@@ -56,7 +57,7 @@ RUN set -eux \
 RUN set -eux \
     && apt-get -qqy update  \
     && apt-get -qqy install --no-install-recommends \ 
-    rtorrent=0.9.8-1 \
+    rtorrent=${RTORRENT_VERSION} \
     screen \
     && mkdir -p /var/lib/rtorrent/  \
     && mkdir -p /var/lib/rtorrent/config/  \
