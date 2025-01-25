@@ -1,3 +1,19 @@
+FROM snowdreamtech/build-essential:alpine3.21 AS builder
+
+ARG TARGETPLATFORM
+ENV UNRAR_VERSION=7.0.9
+
+RUN wget https://www.rarlab.com/rar/unrarsrc-${UNRAR_VERSION}.tar.gz \ 
+    && tar zxvf unrarsrc-${UNRAR_VERSION}.tar.gz \ 
+    && cd unrar \ 
+    && sed -i "s|CXX=c++|CXX?=c++|g" ./makefile \
+    && sed -i "s|CXXFLAGS=.*|CXXFLAGS=-march=native\nCXXFLAGS?=-O2\nCXXFLAGS+=-std=c++11 -Wno-logical-op-parentheses -Wno-switch -Wno-dangling-else|g" ./makefile \
+    && if [[ "${TARGETPLATFORM}" == "linux/ppc64le" ]] ; then sed -i "s|-march=native|-mcpu=native -mtune=native -m64|g" ./makefile ; fi \ 
+    && sed -i "s|LDFLAGS=-pthread|LDFLAGS+=-pthread|g" ./makefile \
+    && make \
+    && chmod 755 unrar 
+
+
 FROM snowdreamtech/alpine:3.21.0
 
 # OCI annotations to image
