@@ -23,6 +23,9 @@ ENV RTORRENT_VERSION=0.10.0-r0 \
     RPC_PORT=50000 \
     RPC_SOCKET="/var/lib/rtorrent/.session/rtorrent.sock" 
 
+ENV FLOOD_AUTH=none \
+    FLOOD_PORT=3000 
+
 ARG GID=1000 \
     UID=1000  \
     USER=rtorrent \
@@ -55,6 +58,8 @@ RUN apk add --no-cache \
     && chown -R  ${USER}:${USER} /var/lib/rtorrent \
     && find / -name "*rtorrent*" -exec chown -Rv ${USER}:${USER} {} \; 
 
+RUN npm install --global flood
+
 # Copy the config files
 COPY --chown=${USER}:${USER} config /var/lib/rtorrent/config
 
@@ -64,7 +69,7 @@ USER ${USER}
 # Set the workdir
 WORKDIR ${WORKDIR}
 
-EXPOSE 50000/tcp 50000/udp
+EXPOSE 3000 50000/tcp 50000/udp
 
 COPY --chown=${USER}:${USER} docker-entrypoint.sh /usr/local/bin/
 
