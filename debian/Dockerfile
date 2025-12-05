@@ -65,12 +65,12 @@ RUN if [ "${USER}" != "root" ] && [ ! -d "/home/${USER}" ] && [ "${PUID}" -ne 0 
     # sed -i "/%sudo/c ${USER} ALL=(ALL:ALL) NOPASSWD:ALL" /etc/sudoers; \
     fi
     
-RUN if [ "$TARGETARCH" = "arm64" ]; then \
-        RTORRENT_VERSION=0.9.8-1.1+b1 \
-    else \
-        RTORRENT_VERSION=0.9.8-1.1 \
-    fi ; \
-    set -eux \
+RUN set -eux \
+        && if [ "$TARGETARCH" = "arm64" ]; then \
+            RTORRENT_VERSION=0.9.8-1.1+b1; \
+        else \
+            RTORRENT_VERSION=0.9.8-1.1; \
+        fi \
         && DEBIAN_FRONTEND=noninteractive apt-get -qqy update  \
         && DEBIAN_FRONTEND=noninteractive apt-get -qqy install --no-install-recommends \ 
         rtorrent=${RTORRENT_VERSION} \
