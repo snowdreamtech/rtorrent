@@ -48,6 +48,11 @@ ENV KEEPALIVE=${KEEPALIVE} \
     USER=${USER} \
     WORKDIR=${WORKDIR} 
 
+ENV RTORRENT_VERSION=0.10.0-r0 \
+    RPC_HOST=localhost \
+    RPC_PORT=50000 \
+    RPC_SOCKET="/var/lib/rtorrent/.session/rtorrent.sock" 
+
 # Create a user with PUID and PGID
 RUN if [ "${USER}" != "root" ] && [ ! -d "/home/${USER}" ] && [ "${PUID}" -ne 0 ] && [ "${PGID}" -ne 0 ]; then \
     addgroup -g ${PGID} ${USER}; \
@@ -57,12 +62,24 @@ RUN if [ "${USER}" != "root" ] && [ ! -d "/home/${USER}" ] && [ "${PUID}" -ne 0 
 
 RUN apk update \
     && apk add --no-cache \
-    vim
+    rtorrent=${RTORRENT_VERSION} \
+    screen \
+    && mkdir -p /var/lib/rtorrent/  \
+    && mkdir -p /var/lib/rtorrent/config/  \
+    && mkdir -p /var/lib/rtorrent/.session/  \
+    && mkdir -p /var/lib/rtorrent/download/  \
+    && mkdir -p /var/lib/rtorrent/watch/  \
+    && mkdir -p /var/lib/rtorrent/log/  
+
+# Copy the config files
+COPY config /var/lib/rtorrent/config
 
 # Enable CAP_NET_BIND_SERVICE
 # RUN if [ "${USER}" != "root" ] && [ "${CAP_NET_BIND_SERVICE}" -eq 1 ]; then \
     # setcap 'cap_net_bind_service=+ep' `which nginx`; \
     # fi
+    
+EXPOSE 50000/tcp 50000/udp
 
 COPY entrypoint.d /usr/local/bin/entrypoint.d
 
