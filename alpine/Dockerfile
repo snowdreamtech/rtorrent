@@ -48,7 +48,7 @@ ENV KEEPALIVE=${KEEPALIVE} \
     USER=${USER} \
     WORKDIR=${WORKDIR} 
 
-ENV RTORRENT_VERSION=0.10.0-r0 \
+ENV RTORRENT_VERSION=0.15.2-r0 \
     RPC_HOST=localhost \
     RPC_PORT=50000 \
     RPC_SOCKET="/var/lib/rtorrent/.session/rtorrent.sock" 
