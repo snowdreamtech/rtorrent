@@ -50,7 +50,7 @@ ENV DEBIAN_FRONTEND=${DEBIAN_FRONTEND} \
     USER=${USER} \
     WORKDIR=${WORKDIR} 
 
-ENV RTORRENT_VERSION=0.9.8-1 \
+ENV RTORRENT_VERSION=0.9.8-1.1 \
     RPC_HOST=localhost \
     RPC_PORT=50000 \
     RPC_SOCKET="/var/lib/rtorrent/.session/rtorrent.sock" 
