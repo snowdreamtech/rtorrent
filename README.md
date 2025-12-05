@@ -1,11 +1,11 @@
-# Base
+# Rtorrent
 
-![Docker Image Version](https://img.shields.io/docker/v/snowdreamtech/base)
-![Docker Image Size](https://img.shields.io/docker/image-size/snowdreamtech/base/latest)
-![Docker Pulls](https://img.shields.io/docker/pulls/snowdreamtech/base)
-![Docker Stars](https://img.shields.io/docker/stars/snowdreamtech/base)
+![Docker Image Version](https://img.shields.io/docker/v/snowdreamtech/rtorrent)
+![Docker Image Size](https://img.shields.io/docker/image-size/snowdreamtech/rtorrent/latest)
+![Docker Pulls](https://img.shields.io/docker/pulls/snowdreamtech/rtorrent)
+![Docker Stars](https://img.shields.io/docker/stars/snowdreamtech/rtorrent)
 
-Docker Image packaging for Base. (amd64, arm32v5,  arm32v6, arm32v7, arm64v8, i386, mips64le, ppc64le,riscv64, s390x)
+Docker Image packaging for Rtorrent. (amd64, arm32v5,  arm32v6, arm32v7, arm64v8, i386, mips64le, ppc64le,riscv64, s390x)
 
 # Usage
 
@@ -13,52 +13,37 @@ To help you get started creating a container from this image you can either use 
 
 ## Docker Cli
 
-### Simple
-
 ```bash
 docker run -d \
-  --name=base \
-  -e TZ=Asia/Shanghai \
+  --name=rtorrent \
+  -e TZ=Etc/UTC \
+  -e RPC_PORT=50000 \
+  -p 50000:50000 \
+  -p 50000:50000/udp \
+  -v /path/to/config:/var/lib/rtorrent/config \
+  -v /path/to/downloads:/var/lib/rtorrent/downloads  \
   --restart unless-stopped \
-  snowdreamtech/base:latest
-```
-
-### Advance
-
-```bash
-docker run -d \
-  --name=base \
-  -e TZ=Asia/Shanghai \
-  -v /path/to/data:/path/to/data \
-  --restart unless-stopped \
-  snowdreamtech/base:latest
+  snowdreamtech/rtorrent:latest
 ```
 
 ## Docker Compose
 
-### Simple
-
 ```bash
-services:
-  base:
-    image: snowdreamtech/base:latest
-    container_name: base
-    environment:
-      - TZ=Asia/Shanghai
-    restart: unless-stopped
-```
+version: "3"
 
-### Advance
-
-```bash
 services:
-  base:
-    image: snowdreamtech/base:latest
-    container_name: base
+  rtorrent:
+    image: snowdreamtech/rtorrent:latest
+    container_name: rtorrent
     environment:
-      - TZ=Asia/Shanghai
+      - TZ=Etc/UTC 
+      - RPC_PORT=50000 
     volumes:
-      - /path/to/data:/path/to/data
+      - /path/to/config:/var/lib/rtorrent/config #optional
+      - /path/to/downloads:/var/lib/rtorrent/downloads 
+    ports:
+      - 50000:50000
+      - 50000:50000/udp
     restart: unless-stopped
 ```
 
@@ -66,7 +51,7 @@ services:
 
 ```bash
 docker buildx create --use --name build --node build --driver-opt network=host
-docker buildx build -t snowdreamtech/base --platform=linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/riscv64,linux/s390x . --push
+docker buildx build -t snowdreamtech/rtorrent --platform=linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/riscv64,linux/s390x . --push
 ```
 
 ## Reference
@@ -78,7 +63,7 @@ docker buildx build -t snowdreamtech/base --platform=linux/386,linux/amd64,linux
 1. [Faster Multi-Platform Builds: Dockerfile Cross-Compilation Guide](https://www.docker.com/blog/faster-multi-platform-builds-dockerfile-cross-compilation-guide/)
 1. [docker/buildx](https://github.com/docker/buildx)
 
-## Contact (备注：base)
+## Contact (备注：rtorrent)
 
 * Email: sn0wdr1am@qq.com
 * QQ: 3217680847
