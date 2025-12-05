@@ -50,6 +50,9 @@ ENV DEBIAN_FRONTEND=${DEBIAN_FRONTEND} \
     USER=${USER} \
     WORKDIR=${WORKDIR} 
 
+ARG TARGETARCH
+ENV TARGETARCH=${TARGETARCH}
+
 ENV RTORRENT_VERSION=0.9.8-1.1 \
     RPC_HOST=localhost \
     RPC_PORT=50000 \
@@ -62,22 +65,27 @@ RUN if [ "${USER}" != "root" ] && [ ! -d "/home/${USER}" ] && [ "${PUID}" -ne 0 
     # sed -i "/%sudo/c ${USER} ALL=(ALL:ALL) NOPASSWD:ALL" /etc/sudoers; \
     fi
     
-RUN set -eux \
-    && DEBIAN_FRONTEND=noninteractive apt-get -qqy update  \
-    && DEBIAN_FRONTEND=noninteractive apt-get -qqy install --no-install-recommends \ 
-    rtorrent=${RTORRENT_VERSION} \
-    screen \
-    && mkdir -p /var/lib/rtorrent/  \
-    && mkdir -p /var/lib/rtorrent/config/  \
-    && mkdir -p /var/lib/rtorrent/.session/  \
-    && mkdir -p /var/lib/rtorrent/download/  \
-    && mkdir -p /var/lib/rtorrent/watch/  \
-    && mkdir -p /var/lib/rtorrent/log/  \
-    && DEBIAN_FRONTEND=noninteractive apt-get -qqy --purge autoremove \
-    && DEBIAN_FRONTEND=noninteractive apt-get -qqy clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /tmp/* \
-    && rm -rf /var/tmp/*
+RUN if [ "$TARGETARCH" = "arm64" ]; then \
+        RTORRENT_VERSION=0.9.8-1.1+b1 \
+    else \
+        RTORRENT_VERSION=0.9.8-1.1 \
+    fi ; \
+    set -eux \
+        && DEBIAN_FRONTEND=noninteractive apt-get -qqy update  \
+        && DEBIAN_FRONTEND=noninteractive apt-get -qqy install --no-install-recommends \ 
+        rtorrent=${RTORRENT_VERSION} \
+        screen \
+        && mkdir -p /var/lib/rtorrent/  \
+        && mkdir -p /var/lib/rtorrent/config/  \
+        && mkdir -p /var/lib/rtorrent/.session/  \
+        && mkdir -p /var/lib/rtorrent/download/  \
+        && mkdir -p /var/lib/rtorrent/watch/  \
+        && mkdir -p /var/lib/rtorrent/log/  \
+        && DEBIAN_FRONTEND=noninteractive apt-get -qqy --purge autoremove \
+        && DEBIAN_FRONTEND=noninteractive apt-get -qqy clean \
+        && rm -rf /var/lib/apt/lists/* \
+        && rm -rf /tmp/* \
+        && rm -rf /var/tmp/*
 
 # Copy the config files
 COPY config /var/lib/rtorrent/config
