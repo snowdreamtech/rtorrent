@@ -1,4 +1,4 @@
-FROM snowdreamtech/debian:13.1.0
+FROM snowdreamtech/php:8.4.11-fpm-trixie
 
 # OCI annotations to image
 LABEL org.opencontainers.image.authors="Snowdream Tech" \
@@ -58,6 +58,8 @@ ENV RTORRENT_VERSION=0.9.8-1.1 \
     RPC_PORT=50000 \
     RPC_SOCKET="/var/lib/rtorrent/.session/rtorrent.sock" 
 
+ENV RUTORRENT_VERSION=5.1.5
+
 # Create a user with PUID and PGID
 RUN if [ "${USER}" != "root" ] && [ ! -d "/home/${USER}" ] && [ "${PUID}" -ne 0 ] && [ "${PGID}" -ne 0 ]; then \
     addgroup --gid ${PGID} ${USER}; \
@@ -90,12 +92,39 @@ RUN set -eux \
 # Copy the config files
 COPY config /var/lib/rtorrent/config
 
+# Install Python3
+RUN set -eux \
+    && apt-get -qqy update  \
+    && apt-get -qqy install --no-install-recommends \ 
+    sox \ 
+    ffmpeg \
+    mediainfo \ 
+    unzip \
+    python3 \ 
+    python3-pip \ 
+    python3-setuptools \ 
+    && pip3 install --upgrade --break-system-packages pip \
+    && pip3 install --break-system-packages cfscrape cloudscraper \
+    && apt-get -qqy --purge autoremove \
+    && apt-get -qqy clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /tmp/* \
+    && rm -rf /var/tmp/*
+
+# Install ruTorrent
+RUN wget https://github.com/Novik/ruTorrent/archive/refs/tags/v${RUTORRENT_VERSION}.tar.gz \ 
+    && tar zxvf v${RUTORRENT_VERSION}.tar.gz  \ 
+    && rm -rfv /usr/share/nginx/html/* \
+    && cp -rfv ruTorrent-${RUTORRENT_VERSION}/* /usr/share/nginx/html/  \ 
+    && rm -rfv v${RUTORRENT_VERSION}.tar.gz \
+    && rm -rfv ruTorrent-${RUTORRENT_VERSION}
+    
 # Enable CAP_NET_BIND_SERVICE
 # RUN if [ "${USER}" != "root" ] && [ "${CAP_NET_BIND_SERVICE}" -eq 1 ]; then \
 #     # setcap 'cap_net_bind_service=+ep' `which nginx`; \
 #     fi
 
-EXPOSE 50000/tcp 50000/udp
+EXPOSE 80 443 50000/tcp 50000/udp
 
 COPY entrypoint.d /usr/local/bin/entrypoint.d
 
