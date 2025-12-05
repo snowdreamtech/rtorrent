@@ -2,15 +2,15 @@ FROM snowdreamtech/debian:13.1.0
 
 # OCI annotations to image
 LABEL org.opencontainers.image.authors="Snowdream Tech" \
-    org.opencontainers.image.title="Base Image Based On Debian" \
-    org.opencontainers.image.description="Docker Images for Base on Debian. (i386,amd64,arm32v5,arm32v7,arm64,mips64le,ppc64le,s390x)" \
-    org.opencontainers.image.documentation="https://hub.docker.com/r/snowdreamtech/base" \
-    org.opencontainers.image.base.name="snowdreamtech/base:debian" \
+    org.opencontainers.image.title="Rtorrent Image Based On Debian" \
+    org.opencontainers.image.description="Docker Images for Rtorrent on Debian. (i386,amd64,arm32v5,arm32v7,arm64,mips64le,ppc64le,s390x)" \
+    org.opencontainers.image.documentation="https://hub.docker.com/r/snowdreamtech/rtorrent" \
+    org.opencontainers.image.base.name="snowdreamtech/rtorrent:debian" \
     org.opencontainers.image.licenses="MIT" \
-    org.opencontainers.image.source="https://github.com/snowdreamtech/base" \
+    org.opencontainers.image.source="https://github.com/snowdreamtech/rtorrent" \
     org.opencontainers.image.vendor="Snowdream Tech" \
-    org.opencontainers.image.version="13.1.0" \
-    org.opencontainers.image.url="https://github.com/snowdreamtech/base"
+    org.opencontainers.image.version="12.8" \
+    org.opencontainers.image.url="https://github.com/snowdreamtech/rtorrent"
 
 # Switch to the user
 USER root
@@ -20,7 +20,7 @@ WORKDIR /root
 
 # keep the docker container running
 ARG DEBIAN_FRONTEND=noninteractive \
-    KEEPALIVE=0 \
+    KEEPALIVE=1 \
     # The cap_net_bind_service capability in Linux allows a process to bind a socket to Internet domain privileged ports, 
     # which are port numbers less than 1024. 
     CAP_NET_BIND_SERVICE=0 \
