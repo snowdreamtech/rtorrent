@@ -18,15 +18,15 @@ fi
 # flood
 if [ "${FLOOD_AUTH}" = "default" ]; then
   if [ "${USER}" != "root" ]; then
-    su - "${USER}" -c "flood --host 0.0.0.0 --port \"${FLOOD_PORT}\" --auth default >/dev/null 2>&1 &"
+    su - "${USER}" -c "flood --host 0.0.0.0 --port \"${FLOOD_PORT}\" --auth default &"
   else
-    flood --host 0.0.0.0 --port "${FLOOD_PORT}" --auth default >/dev/null 2>&1 &
+    flood --host 0.0.0.0 --port "${FLOOD_PORT}" --auth default &
   fi
 else
   if [ "${USER}" != "root" ]; then
-    su - "${USER}" -c "flood --host 0.0.0.0 --port \"${FLOOD_PORT}\" --auth none --rtsocket \"${RPC_SOCKET}\" >/dev/null 2>&1 &"
+    su - "${USER}" -c "flood --host 0.0.0.0 --port \"${FLOOD_PORT}\" --auth none --rtsocket \"${RPC_SOCKET}\" &"
   else
-    flood --host 0.0.0.0 --port "${FLOOD_PORT}" --auth none --rtsocket "${RPC_SOCKET}" >/dev/null 2>&1 &
+    flood --host 0.0.0.0 --port "${FLOOD_PORT}" --auth none --rtsocket "${RPC_SOCKET}" &
   fi
 fi
 
