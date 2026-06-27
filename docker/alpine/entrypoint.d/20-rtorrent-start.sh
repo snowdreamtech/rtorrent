@@ -19,6 +19,9 @@ if [ -n "${RPC_PORT}" ]; then
     sed -i "s/network\.port_range\.set.*/network\.port_range\.set = \"${RPC_PORT}\"-\"${RPC_PORT}\"/g" /var/lib/rtorrent/config/rtorrent.rc
 fi
 
+# allow rutorrent to access the socket
+sed -i 's/chmod,770/chmod,777/g' /var/lib/rtorrent/config/rtorrent.rc
+
 # Set ownership if running as specific user
 if [ "${USER}" != "root" ]; then
     chown -R "${USER}:${USER}" /var/lib/rtorrent

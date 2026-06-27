@@ -58,15 +58,15 @@ RUN dnf install -y epel-release \
     && dnf install -y \
     rtorrent=${RTORRENT_VERSION} \
     screen \
-    sox \ 
+    sox \
     ffmpeg \
-    mediainfo \ 
+    mediainfo \
     unzip \
     wget \
     ca-certificates \
-    python3 \ 
-    python3-pip \ 
-    python3-setuptools \ 
+    python3 \
+    python3-pip \
+    python3-setuptools \
     && pip3 install --upgrade --break-system-packages pip \
     && pip3 install --break-system-packages cfscrape cloudscraper
 
@@ -75,7 +75,10 @@ RUN wget https://github.com/Novik/ruTorrent/archive/refs/tags/v${RUTORRENT_VERSI
     && rm -rfv /var/www/html/* \
     && cp -rfv ruTorrent-${RUTORRENT_VERSION}/* /var/www/html/  \
     && rm -rfv v${RUTORRENT_VERSION}.tar.gz \
-    && rm -rfv ruTorrent-${RUTORRENT_VERSION}
+    && rm -rfv ruTorrent-${RUTORRENT_VERSION} \
+    && sed -i 's/$scgi_port = 5000;/$scgi_port = 0;/g' /var/www/html/conf/config.php \
+    && sed -i 's/$scgi_host = "127.0.0.1";/$scgi_host = "unix:\/\/\/var\/lib\/rtorrent\/.session\/rtorrent.sock";/g' /var/www/html/conf/config.php \
+    && chmod -R 777 /var/www/html/share
 
 COPY config /etc/rtorrent
 
