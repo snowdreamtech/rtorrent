@@ -208,7 +208,6 @@ jobs:
             registry.terraform.io:443
             formulae.brew.sh:443
             repo.yarnpkg.com:443
-            mise.jdx.dev:443
             ghcr.io:443
             pkg-containers.githubusercontent.com:443
             public.ecr.aws:443
