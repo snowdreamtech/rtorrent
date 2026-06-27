@@ -22,9 +22,15 @@ fi
 # allow rutorrent to access the socket
 sed -i 's/chmod,770/chmod,777/g' /var/lib/rtorrent/config/rtorrent.rc
 
+# Remove lock file if it exists (allows unclean restart)
+if [ -f "/var/lib/rtorrent/.session/rtorrent.lock" ]; then
+  rm -f "/var/lib/rtorrent/.session/rtorrent.lock"
+fi
 # Set ownership if running as specific user
 if [ "${USER}" != "root" ]; then
-  chown -R "${USER}:${USER}" /var/lib/rtorrent
+  chown "${USER}:${USER}" /var/lib/rtorrent
+  chown -R "${USER}:${USER}" /var/lib/rtorrent/config /var/lib/rtorrent/.session /var/lib/rtorrent/watch /var/lib/rtorrent/log
+  chown "${USER}:${USER}" /var/lib/rtorrent/download
 fi
 
 # Run rtorrent in daemon mode using screen
