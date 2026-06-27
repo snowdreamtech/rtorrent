@@ -1,0 +1,94 @@
+# Base Image (Alpine Variant)
+# Extends snowdreamtech/php:nginx with additional tooling and configuration.
+
+FROM snowdreamtech/php:8.4.22-nginx-alpine3.24.0
+
+# Build-time Configuration
+ARG BUILDTIME \
+    VERSION \
+    REVISION \
+    KEEPALIVE=1 \
+    CAP_NET_BIND_SERVICE=0 \
+    LANG=C.UTF-8 \
+    UMASK=022 \
+    DEBUG=false \
+    PASSWORDLESS_SUDO=false \
+    PGID=0 \
+    PUID=0 \
+    USER=root \
+    WORKDIR=/root \
+    RTORRENT_VERSION=0.15.2-r0 \
+    RUTORRENT_VERSION=5.1.5
+
+# Standard OCI Metadata (https://github.com/opencontainers/image-spec)
+LABEL org.opencontainers.image.authors="Snowdream Tech" \
+    org.opencontainers.image.title="rutorrent Image Based On alpine" \
+    org.opencontainers.image.description="Docker Images for rutorrent on alpine. (i386, amd64, arm32v6, arm32v7, arm64, ppc64le, riscv64, s390x)" \
+    org.opencontainers.image.documentation="https://hub.docker.com/r/snowdreamtech/rtorrent" \
+    org.opencontainers.image.base.name="snowdreamtech/php:8.4.22-nginx-alpine3.24.0" \
+    org.opencontainers.image.licenses="MIT" \
+    org.opencontainers.image.source="https://github.com/snowdreamtech/rtorrent" \
+    org.opencontainers.image.vendor="Snowdream Tech" \
+    org.opencontainers.image.created="${BUILDTIME}" \
+    org.opencontainers.image.revision="${REVISION}" \
+    org.opencontainers.image.url="https://github.com/snowdreamtech/rtorrent"
+
+# x-release-please-start-version
+LABEL org.opencontainers.image.version="${VERSION:-0.15.2}"
+# x-release-please-end
+
+# Runtime Environment Configuration
+ENV KEEPALIVE=${KEEPALIVE} \
+    CAP_NET_BIND_SERVICE=${CAP_NET_BIND_SERVICE} \
+    LANG=${LANG} \
+    UMASK=${UMASK} \
+    DEBUG=${DEBUG} \
+    PASSWORDLESS_SUDO=${PASSWORDLESS_SUDO} \
+    PGID=${PGID} \
+    PUID=${PUID} \
+    USER=${USER} \
+    WORKDIR=${WORKDIR} \
+    RTORRENT_VERSION=${RTORRENT_VERSION} \
+    RUTORRENT_VERSION=${RUTORRENT_VERSION} \
+    RPC_HOST=localhost \
+    RPC_PORT=50000 \
+    RPC_SOCKET="/var/lib/rtorrent/.session/rtorrent.sock"
+
+RUN apk update \
+    && apk add --no-cache \
+    rtorrent=${RTORRENT_VERSION} \
+    screen \
+    sox \ 
+    ffmpeg \
+    mediainfo \ 
+    unzip \
+    python3 \ 
+    py3-pip \ 
+    py3-setuptools \ 
+    && pip3 install --upgrade --break-system-packages pip \
+    && pip3 install --break-system-packages cfscrape cloudscraper
+
+RUN wget https://github.com/Novik/ruTorrent/archive/refs/tags/v${RUTORRENT_VERSION}.tar.gz \
+    && tar zxvf v${RUTORRENT_VERSION}.tar.gz  \
+    && rm -rfv /var/www/html/* \
+    && cp -rfv ruTorrent-${RUTORRENT_VERSION}/* /var/www/html/  \
+    && rm -rfv v${RUTORRENT_VERSION}.tar.gz \
+    && rm -rfv ruTorrent-${RUTORRENT_VERSION}
+
+COPY config /etc/rtorrent
+
+# Container Orchestration Files
+COPY entrypoint.d/20-rtorrent-start.sh /usr/local/bin/entrypoint.d/20-rtorrent-start.sh
+
+RUN chmod +x /usr/local/bin/entrypoint.d/*
+
+EXPOSE 80 443 50000/tcp 50000/udp
+
+# Standard Healthcheck (Verification of core system responsiveness)
+HEALTHCHECK NONE
+
+# Process Execution
+USER root
+WORKDIR /var/www/html
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["/bin/sh"]

@@ -5,45 +5,51 @@
       "release-type": "simple",
       "component": "alpine",
       "include-component-in-tag": true,
-      "release-as": "3.24.0",
+      "release-as": "0.9.8",
       "changelog-path": "CHANGELOG.md",
       "exclude-paths": ["docker/alpine/CHANGELOG.md"],
       "extra-files": [
         {
           "type": "generic",
-          "path": "Dockerfile",
+          "path": "Dockerfile.rtorrent",
           "glob": false
-        }
+        },
+        { "type": "generic", "path": "Dockerfile.rutorrent", "glob": false },
+        { "type": "generic", "path": "Dockerfile.flood", "glob": false }
       ]
     },
     "docker/debian": {
       "release-type": "simple",
       "component": "debian",
       "include-component-in-tag": true,
-      "release-as": "13.5.0",
+      "release-as": "0.9.8",
       "changelog-path": "CHANGELOG.md",
       "exclude-paths": ["docker/debian/CHANGELOG.md"],
       "extra-files": [
         {
           "type": "generic",
-          "path": "Dockerfile",
+          "path": "Dockerfile.rtorrent",
           "glob": false
-        }
+        },
+        { "type": "generic", "path": "Dockerfile.rutorrent", "glob": false },
+        { "type": "generic", "path": "Dockerfile.flood", "glob": false }
       ]
     },
     "docker/rocky": {
       "release-type": "simple",
       "component": "rocky",
       "include-component-in-tag": true,
-      "release-as": "10.2.0",
+      "release-as": "0.9.8",
       "changelog-path": "CHANGELOG.md",
       "exclude-paths": ["docker/rocky/CHANGELOG.md"],
       "extra-files": [
         {
           "type": "generic",
-          "path": "Dockerfile",
+          "path": "Dockerfile.rtorrent",
           "glob": false
-        }
+        },
+        { "type": "generic", "path": "Dockerfile.rutorrent", "glob": false },
+        { "type": "generic", "path": "Dockerfile.flood", "glob": false }
       ]
     }
   },
