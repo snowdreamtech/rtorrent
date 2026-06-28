@@ -54,7 +54,9 @@ ENV KEEPALIVE=${KEEPALIVE} \
     FLOOD_AUTH=none \
     FLOOD_PORT=3000
 
-RUN apk update \
+RUN echo 'https://dl-cdn.alpinelinux.org/alpine/v3.24/main' >> /etc/apk/repositories \
+    && echo 'https://dl-cdn.alpinelinux.org/alpine/v3.24/community' >> /etc/apk/repositories \
+    && apk update \
     && apk add --no-cache \
     rtorrent=${RTORRENT_VERSION} \
     screen

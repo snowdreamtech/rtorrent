@@ -69,6 +69,7 @@ RUN apk update \
 
 RUN wget https://github.com/Novik/ruTorrent/archive/refs/tags/v${RUTORRENT_VERSION}.tar.gz \
     && tar zxvf v${RUTORRENT_VERSION}.tar.gz  \
+    && mkdir -p /var/www/html \
     && rm -rfv /var/www/html/* \
     && cp -rfv ruTorrent-${RUTORRENT_VERSION}/* /var/www/html/  \
     && rm -rfv v${RUTORRENT_VERSION}.tar.gz \
