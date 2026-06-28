@@ -54,7 +54,7 @@ ENV KEEPALIVE=${KEEPALIVE} \
 
 RUN dnf install -y epel-release \
     && dnf install -y \
-    rtorrent=${RTORRENT_VERSION} \
+    rtorrent-${RTORRENT_VERSION}\* \
     screen
 
 COPY config /etc/rtorrent
