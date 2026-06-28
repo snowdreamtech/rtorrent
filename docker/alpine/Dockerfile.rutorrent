@@ -1,7 +1,7 @@
 # Base Image (Alpine Variant)
 # Extends snowdreamtech/php:nginx with additional tooling and configuration.
 
-FROM snowdreamtech/php:latest-nginx-alpine
+FROM snowdreamtech/php:8.4.22-nginx-alpine
 
 # Build-time Configuration
 ARG BUILDTIME \
@@ -18,7 +18,7 @@ ARG BUILDTIME \
     USER=root \
     WORKDIR=/root \
     RTORRENT_VERSION=0.16.12-r0 \
-    RUTORRENT_VERSION=5.1.5
+    RUTORRENT_VERSION=5.3.4
 
 # Standard OCI Metadata (https://github.com/opencontainers/image-spec)
 LABEL org.opencontainers.image.authors="Snowdream Tech" \

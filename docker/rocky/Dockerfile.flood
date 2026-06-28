@@ -1,7 +1,7 @@
 # Base Image (Debian Variant)
 # Extends snowdreamtech/node with additional tooling and configuration.
 
-FROM snowdreamtech/node:latest-rocky
+FROM snowdreamtech/node:22.22.2-rocky
 
 # Build-time Configuration
 ARG BUILDTIME \
