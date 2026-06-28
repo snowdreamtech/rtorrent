@@ -17,7 +17,7 @@ ARG BUILDTIME \
     PUID=0 \
     USER=root \
     WORKDIR=/root \
-    RTORRENT_VERSION=0.9.8-1.1 \
+    RTORRENT_VERSION="0.9.8-1.1*" \
     RUTORRENT_VERSION=5.1.5
 
 # Standard OCI Metadata (https://github.com/opencontainers/image-spec)
