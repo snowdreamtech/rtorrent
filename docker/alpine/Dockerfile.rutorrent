@@ -1,7 +1,7 @@
 # Base Image (Alpine Variant)
 # Extends snowdreamtech/php:nginx with additional tooling and configuration.
 
-FROM snowdreamtech/php:8.4.22-nginx-alpine
+FROM snowdreamtech/php:latest-nginx-alpine
 
 # Build-time Configuration
 ARG BUILDTIME \
@@ -25,7 +25,7 @@ LABEL org.opencontainers.image.authors="Snowdream Tech" \
     org.opencontainers.image.title="rutorrent Image Based On alpine" \
     org.opencontainers.image.description="Docker Images for rutorrent on alpine. (i386, amd64, arm32v6, arm32v7, arm64, ppc64le, riscv64, s390x)" \
     org.opencontainers.image.documentation="https://hub.docker.com/r/snowdreamtech/rtorrent" \
-    org.opencontainers.image.base.name="snowdreamtech/php:8.4.22-nginx-alpine" \
+    org.opencontainers.image.base.name="snowdreamtech/php:latest-nginx-alpine" \
     org.opencontainers.image.licenses="MIT" \
     org.opencontainers.image.source="https://github.com/snowdreamtech/rtorrent" \
     org.opencontainers.image.vendor="Snowdream Tech" \

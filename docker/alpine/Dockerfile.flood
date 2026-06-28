@@ -1,7 +1,7 @@
 # Base Image (Alpine Variant)
 # Extends snowdreamtech/node with additional tooling and configuration.
 
-FROM snowdreamtech/node:24.16.0-alpine
+FROM snowdreamtech/node:latest-alpine
 
 # Build-time Configuration
 ARG BUILDTIME \
@@ -24,7 +24,7 @@ LABEL org.opencontainers.image.authors="Snowdream Tech" \
     org.opencontainers.image.title="flood Image Based On alpine" \
     org.opencontainers.image.description="Docker Images for flood on alpine. (i386, amd64, arm32v6, arm32v7, arm64, ppc64le, riscv64, s390x)" \
     org.opencontainers.image.documentation="https://hub.docker.com/r/snowdreamtech/rtorrent" \
-    org.opencontainers.image.base.name="snowdreamtech/node:24.16.0-alpine" \
+    org.opencontainers.image.base.name="snowdreamtech/node:latest-alpine" \
     org.opencontainers.image.licenses="MIT" \
     org.opencontainers.image.source="https://github.com/snowdreamtech/rtorrent" \
     org.opencontainers.image.vendor="Snowdream Tech" \

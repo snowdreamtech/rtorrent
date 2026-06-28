@@ -1,7 +1,7 @@
 # Base Image (Debian Variant)
 # Extends snowdreamtech/node with additional tooling and configuration.
 
-FROM snowdreamtech/node:20.19.2-debian
+FROM snowdreamtech/node:latest-debian
 
 # Build-time Configuration
 ARG BUILDTIME \
@@ -17,14 +17,14 @@ ARG BUILDTIME \
     PUID=0 \
     USER=root \
     WORKDIR=/root \
-    RTORRENT_VERSION="0.9.8-1.1*"
+    RTORRENT_VERSION="0.9.8*"
 
 # Standard OCI Metadata (https://github.com/opencontainers/image-spec)
 LABEL org.opencontainers.image.authors="Snowdream Tech" \
     org.opencontainers.image.title="flood Image Based On debian" \
     org.opencontainers.image.description="Docker Images for flood on debian. (i386, amd64, arm32v6, arm32v7, arm64, ppc64le, riscv64, s390x)" \
     org.opencontainers.image.documentation="https://hub.docker.com/r/snowdreamtech/rtorrent" \
-    org.opencontainers.image.base.name="snowdreamtech/node:20.19.2-debian" \
+    org.opencontainers.image.base.name="snowdreamtech/node:latest-debian" \
     org.opencontainers.image.licenses="MIT" \
     org.opencontainers.image.source="https://github.com/snowdreamtech/rtorrent" \
     org.opencontainers.image.vendor="Snowdream Tech" \
