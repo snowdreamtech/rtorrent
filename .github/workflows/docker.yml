@@ -54,7 +54,7 @@ name: "🐳 Docker Multi-Platform Build"
           - "all"
           - "alpine"
           - "debian"
-          - "rocky"
+#          - "rocky"
         default: "all"
       push_images:
         description: "Push images to registries"
@@ -73,7 +73,7 @@ jobs:
       fail-fast: false
       matrix:
         flavor: [rtorrent, rutorrent, flood]
-        variant: [alpine, debian, rocky]
+        variant: [alpine, debian]
         include:
           - variant: alpine
             version: "3.24.0"
