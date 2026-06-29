@@ -1,7 +1,7 @@
 # Base Image (Debian Variant)
 # Extends snowdreamtech/php:nginx with additional tooling and configuration.
 
-FROM ghcr.io/snowdreamtech/php:8.4.16-nginx-debian
+FROM ghcr.io/snowdreamtech/php:8.4.21-nginx-debian
 
 # Build-time Configuration
 ARG BUILDTIME \
