@@ -1,7 +1,7 @@
 # Base Image (Alpine Variant)
 # Extends snowdreamtech/node with additional tooling and configuration.
 
-FROM ghcr.io/snowdreamtech/node:24.16.0-alpine
+FROM ghcr.io/snowdreamtech/node:22.16.0-alpine
 
 # Build-time Configuration
 ARG BUILDTIME \
