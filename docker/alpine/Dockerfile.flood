@@ -33,7 +33,7 @@ LABEL org.opencontainers.image.authors="Snowdream Tech" \
     org.opencontainers.image.url="https://github.com/snowdreamtech/rtorrent"
 
 # x-release-please-start-version
-LABEL org.opencontainers.image.version="${VERSION:-0.15.2}"
+LABEL org.opencontainers.image.version="${VERSION:-0.16.12}"
 # x-release-please-end
 
 # Runtime Environment Configuration
