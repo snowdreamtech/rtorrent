@@ -89,12 +89,12 @@ jobs:
             is_latest: true
             package_manager: apt-get
 
-#          - variant: rocky
-#            version: "10.2.0"
-#            context: docker/rocky
-#            platforms: linux/amd64,linux/arm64,linux/ppc64le,linux/s390x
-#            is_latest: false
-#            package_manager: dnf
+          - variant: rocky
+            version: "9.8.0"
+            context: docker/rocky
+            platforms: linux/amd64,linux/arm64
+            is_latest: false
+            package_manager: dnf
     concurrency:
       group: docker-${{ github.workflow }}-${{ github.event_name == 'schedule' && 'nightly' || github.ref }}-${{ matrix.flavor }}-${{ matrix.variant }}
       cancel-in-progress: ${{ github.event_name != 'schedule' }}

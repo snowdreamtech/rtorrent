@@ -54,7 +54,8 @@ ENV KEEPALIVE=${KEEPALIVE} \
     FLOOD_AUTH=none \
     FLOOD_PORT=3000
 
-RUN dnf install -y epel-release \
+RUN echo "ip_resolve=4" >> /etc/dnf/dnf.conf \
+    && dnf install -y epel-release \
     && dnf install -y \
     rtorrent-${RTORRENT_VERSION}\* \
     screen

@@ -52,7 +52,8 @@ ENV KEEPALIVE=${KEEPALIVE} \
     RPC_PORT=50000 \
     RPC_SOCKET="/var/lib/rtorrent/.session/rtorrent.sock"
 
-RUN dnf install -y epel-release \
+RUN echo "ip_resolve=4" >> /etc/dnf/dnf.conf \
+    && dnf install -y epel-release \
     && dnf install -y \
     rtorrent-${RTORRENT_VERSION}\* \
     screen

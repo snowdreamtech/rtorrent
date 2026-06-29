@@ -54,7 +54,8 @@ ENV KEEPALIVE=${KEEPALIVE} \
     RPC_PORT=50000 \
     RPC_SOCKET="/var/lib/rtorrent/.session/rtorrent.sock"
 
-RUN dnf install -y epel-release \
+RUN echo "ip_resolve=4" >> /etc/dnf/dnf.conf \
+    && dnf install -y epel-release \
     && dnf install -y \
     rtorrent-${RTORRENT_VERSION}\* \
     screen \
@@ -69,13 +70,12 @@ RUN dnf install -y epel-release \
     python3-setuptools \
     && pip3 install --break-system-packages cfscrape cloudscraper
 
-RUN wget https://github.com/Novik/ruTorrent/archive/refs/tags/v${RUTORRENT_VERSION}.tar.gz \
-    && tar zxvf v${RUTORRENT_VERSION}.tar.gz  \
-    && mkdir -p /var/www/html \
+RUN mkdir -p /var/www/html \
     && rm -rfv /var/www/html/* \
-    && cp -rfv ruTorrent-${RUTORRENT_VERSION}/* /var/www/html/  \
-    && rm -rfv v${RUTORRENT_VERSION}.tar.gz \
-    && rm -rfv ruTorrent-${RUTORRENT_VERSION} \
+    && wget https://github.com/Novik/ruTorrent/archive/refs/tags/v${RUTORRENT_VERSION}.tar.gz -O /tmp/rutorrent.tar.gz \
+    && tar zxvf /tmp/rutorrent.tar.gz -C /tmp \
+    && cp -rfv /tmp/ruTorrent-${RUTORRENT_VERSION}/* /var/www/html/ \
+    && rm -rfv /tmp/rutorrent.tar.gz /tmp/ruTorrent-${RUTORRENT_VERSION} \
     && sed -i 's/$scgi_port = 5000;/$scgi_port = 0;/g' /var/www/html/conf/config.php \
     && sed -i 's/$scgi_host = "127.0.0.1";/$scgi_host = "unix:\/\/\/var\/lib\/rtorrent\/.session\/rtorrent.sock";/g' /var/www/html/conf/config.php \
     && chmod -R 777 /var/www/html/share
