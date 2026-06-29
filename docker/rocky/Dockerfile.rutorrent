@@ -62,7 +62,7 @@ RUN echo "ip_resolve=4" >> /etc/dnf/dnf.conf \
     rtorrent-${RTORRENT_VERSION}\* \
     screen \
     sox \
-    ffmpeg \
+    ffmpeg-free \
     mediainfo \
     unzip \
     wget \
