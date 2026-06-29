@@ -1,7 +1,7 @@
 # Base Image (Debian Variant)
 # Extends snowdreamtech/debian with additional tooling and configuration.
 
-FROM snowdreamtech/debian:13.5.0
+FROM ghcr.io/snowdreamtech/debian:13.5.0
 
 # Build-time Configuration
 ARG BUILDTIME \
@@ -24,7 +24,7 @@ LABEL org.opencontainers.image.authors="Snowdream Tech" \
     org.opencontainers.image.title="rtorrent Image Based On debian" \
     org.opencontainers.image.description="Docker Images for rtorrent on debian. (i386, amd64, arm32v6, arm32v7, arm64, ppc64le, riscv64, s390x)" \
     org.opencontainers.image.documentation="https://hub.docker.com/r/snowdreamtech/rtorrent" \
-    org.opencontainers.image.base.name="snowdreamtech/debian:13.5.0" \
+    org.opencontainers.image.base.name="ghcr.io/snowdreamtech/debian:13.5.0" \
     org.opencontainers.image.licenses="MIT" \
     org.opencontainers.image.source="https://github.com/snowdreamtech/rtorrent" \
     org.opencontainers.image.vendor="Snowdream Tech" \
