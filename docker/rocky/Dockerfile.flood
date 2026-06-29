@@ -1,7 +1,7 @@
 # Base Image (Debian Variant)
 # Extends snowdreamtech/node with additional tooling and configuration.
 
-FROM snowdreamtech/node:22.22.2-rocky
+FROM snowdreamtech/rocky:9.8.0
 
 # Build-time Configuration
 ARG BUILDTIME \
@@ -24,7 +24,7 @@ LABEL org.opencontainers.image.authors="Snowdream Tech" \
     org.opencontainers.image.title="flood Image Based On rocky" \
     org.opencontainers.image.description="Docker Images for flood on rocky. (i386, amd64, arm32v6, arm32v7, arm64, ppc64le, riscv64, s390x)" \
     org.opencontainers.image.documentation="https://hub.docker.com/r/snowdreamtech/rtorrent" \
-    org.opencontainers.image.base.name="snowdreamtech/node:latest-rocky" \
+    org.opencontainers.image.base.name="snowdreamtech/rocky:9.8.0" \
     org.opencontainers.image.licenses="MIT" \
     org.opencontainers.image.source="https://github.com/snowdreamtech/rtorrent" \
     org.opencontainers.image.vendor="Snowdream Tech" \
@@ -56,11 +56,12 @@ ENV KEEPALIVE=${KEEPALIVE} \
 
 RUN echo "ip_resolve=4" >> /etc/dnf/dnf.conf \
     && dnf install -y epel-release \
+    && dnf module enable -y nodejs:22 || true \
+    && dnf install -y nodejs \
     && dnf install -y \
     rtorrent-${RTORRENT_VERSION}\* \
-    screen
-
-RUN npm install --global flood
+    screen \
+    && npm install -g flood
 
 COPY config /etc/rtorrent
 
