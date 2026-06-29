@@ -73,7 +73,7 @@ jobs:
       fail-fast: false
       matrix:
         flavor: [rtorrent, rutorrent, flood]
-        variant: [alpine, debian]
+        variant: [alpine, debian, rocky]
         include:
           - variant: alpine
             version: "3.24.0"
