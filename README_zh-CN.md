@@ -74,9 +74,9 @@ docker run -d \
   snowdreamtech/rtorrent:debian
 ```
 
-**支持的架构**：i386、amd64、arm32v5、arm32v7、arm64、mips64le、ppc64le、s390x
+**支持的架构**：amd64、arm32v7、arm64、ppc64le、riscv64、s390x
 
-**基础镜像**：`snowdreamtech/debian:13.5.0`
+**基础镜像**：`snowdreamtech/debian:latest`
 
 ### Alpine
 
@@ -95,7 +95,7 @@ docker run -d \
 
 **支持的架构**：i386、amd64、arm32v6、arm32v7、arm64、ppc64le、riscv64、s390x
 
-**基础镜像**：`snowdreamtech/alpine:3.24.0`
+**基础镜像**：`snowdreamtech/alpine:latest`
 
 ### Rocky
 
@@ -112,9 +112,9 @@ docker run -d \
   snowdreamtech/rtorrent:rocky
 ```
 
-**支持的架构**：i386、amd64、arm32v5、arm32v7、arm64、mips64le、ppc64le、s390x
+**支持的架构**：amd64、arm64、ppc64le、s390x
 
-**基础镜像**：`snowdreamtech/rocky:10.2.0`
+**基础镜像**：`snowdreamtech/rocky:latest`
 
 ## 构建说明
 
@@ -141,7 +141,7 @@ docker buildx create --use --name build --node build --driver-opt network=host
 
 # 为多个架构构建 Debian
 docker buildx build \
-  --platform=linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64,linux/mips64le,linux/ppc64le,linux/s390x \
+  --platform=linux/386,linux/amd64,linux/arm/v7,linux/arm64 \
   -t snowdreamtech/rtorrent:debian \
   ./docker/debian/ \
   --push
@@ -155,7 +155,7 @@ docker buildx build \
 
 # 为多个架构构建 Rocky
 docker buildx build \
-  --platform=linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64,linux/mips64le,linux/ppc64le,linux/s390x \
+  --platform=linux/amd64,linux/arm64,linux/ppc64le,linux/s390x \
   -t snowdreamtech/rtorrent:rocky \
   ./docker/rocky/ \
   --push
@@ -217,13 +217,9 @@ docker run -d \
 
 示例：
 
-- `snowdreamtech/rtorrent:1.37.0-debian`
-- `snowdreamtech/rtorrent:1.37.0-alpine`
-- `snowdreamtech/rtorrent:1.37.0-rocky`
-
-此格式允许：
-
-- **完整版本固定**：`1.37.0-debian`（精确版本）
+- `snowdreamtech/rtorrent:<version>-debian`
+- `snowdreamtech/rtorrent:<version>-alpine`
+- `snowdreamtech/rtorrent:<version>-rocky`
 - **变体最新标签**：`latest-debian`（跟踪 Debian 最新版本）
 - **全局最新标签**：`latest`（跟踪最新版本，默认指向 Debian）
 
@@ -233,9 +229,9 @@ docker run -d \
 
 | 变体 | 架构 |
 |---------|---------------|
-| **Debian** | i386、amd64、arm32v5、arm32v7、arm64、mips64le、ppc64le、s390x |
+| **Debian** | amd64、arm32v7、arm64、ppc64le、riscv64、s390x |
 | **Alpine** | i386、amd64、arm32v6、arm32v7、arm64、ppc64le、riscv64、s390x |
-| **Rocky** | i386、amd64、arm32v5、arm32v7、arm64、mips64le、ppc64le、s390x |
+| **Rocky** | amd64、arm64、ppc64le、s390x |
 
 Docker 在拉取镜像时会自动为您的平台选择适当的架构。
 
