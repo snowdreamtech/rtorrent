@@ -85,7 +85,7 @@ jobs:
           - variant: debian
             version: "13.6.0"
             context: docker/debian
-            platforms: linux/386,linux/amd64,linux/arm/v7,linux/arm64
+            platforms: linux/amd64,linux/arm/v7,linux/arm64,linux/riscv64,linux/ppc64le,linux/s390x
             is_latest: true
             package_manager: apt-get
 
