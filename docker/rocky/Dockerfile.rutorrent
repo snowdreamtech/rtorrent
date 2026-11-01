@@ -1,0 +1,98 @@
+# Base Image (Debian Variant)
+# Extends snowdreamtech/php:nginx with additional tooling and configuration.
+
+FROM ghcr.io/snowdreamtech/rocky:10.2.0
+
+# Build-time Configuration
+ARG BUILDTIME \
+    VERSION \
+    REVISION \
+    KEEPALIVE=1 \
+    CAP_NET_BIND_SERVICE=0 \
+    LANG=C.UTF-8 \
+    UMASK=022 \
+    DEBUG=false \
+    PASSWORDLESS_SUDO=false \
+    PGID=0 \
+    PUID=0 \
+    USER=root \
+    WORKDIR=/root \
+    RTORRENT_VERSION=0.9.8 \
+    RUTORRENT_VERSION=5.3.20
+
+# Standard OCI Metadata (https://github.com/opencontainers/image-spec)
+LABEL org.opencontainers.image.authors="Snowdream Tech" \
+    org.opencontainers.image.title="rutorrent Image Based On rocky" \
+    org.opencontainers.image.description="Docker Images for rutorrent on rocky. (i386, amd64, arm32v6, arm32v7, arm64, ppc64le, riscv64, s390x)" \
+    org.opencontainers.image.documentation="https://hub.docker.com/r/snowdreamtech/rtorrent" \
+    org.opencontainers.image.base.name="ghcr.io/snowdreamtech/rocky:10.2.0" \
+    org.opencontainers.image.licenses="MIT" \
+    org.opencontainers.image.source="https://github.com/snowdreamtech/rtorrent" \
+    org.opencontainers.image.vendor="Snowdream Tech" \
+    org.opencontainers.image.version="${VERSION}" \
+    org.opencontainers.image.created="${BUILDTIME}" \
+    org.opencontainers.image.revision="${REVISION}" \
+    org.opencontainers.image.url="https://github.com/snowdreamtech/rtorrent"
+
+# Runtime Environment Configuration
+ENV KEEPALIVE=${KEEPALIVE} \
+    CAP_NET_BIND_SERVICE=${CAP_NET_BIND_SERVICE} \
+    LANG=${LANG} \
+    UMASK=${UMASK} \
+    DEBUG=${DEBUG} \
+    PASSWORDLESS_SUDO=${PASSWORDLESS_SUDO} \
+    PGID=${PGID} \
+    PUID=${PUID} \
+    USER=${USER} \
+    WORKDIR=${WORKDIR} \
+    RTORRENT_VERSION=${RTORRENT_VERSION} \
+    RUTORRENT_VERSION=${RUTORRENT_VERSION} \
+    RPC_HOST=localhost \
+    RPC_PORT=50000 \
+    RPC_SOCKET="/var/lib/rtorrent/.session/rtorrent.sock"
+
+RUN echo "ip_resolve=4" >> /etc/dnf/dnf.conf \
+    && dnf install -y epel-release \
+    && dnf install -y \
+    php-fpm \
+    nginx \
+    rtorrent-${RTORRENT_VERSION}\* \
+    screen \
+    sox \
+    ffmpeg-free \
+    mediainfo \
+    unzip \
+    wget \
+    ca-certificates \
+    python3 \
+    python3-pip \
+    python3-setuptools \
+    && PIP_BREAK_SYSTEM_PACKAGES=1 pip3 install cfscrape cloudscraper
+
+RUN mkdir -p /var/www/html \
+    && rm -rfv /var/www/html/* \
+    && wget https://github.com/Novik/ruTorrent/archive/refs/tags/v${RUTORRENT_VERSION}.tar.gz -O /tmp/rutorrent.tar.gz \
+    && tar zxvf /tmp/rutorrent.tar.gz -C /tmp \
+    && cp -rfv /tmp/ruTorrent-${RUTORRENT_VERSION}/* /var/www/html/ \
+    && rm -rfv /tmp/rutorrent.tar.gz /tmp/ruTorrent-${RUTORRENT_VERSION} \
+    && sed -i 's/$scgi_port = 5000;/$scgi_port = 0;/g' /var/www/html/conf/config.php \
+    && sed -i 's/$scgi_host = "127.0.0.1";/$scgi_host = "unix:\/\/\/var\/lib\/rtorrent\/.session\/rtorrent.sock";/g' /var/www/html/conf/config.php \
+    && chmod -R 777 /var/www/html/share
+
+COPY config /etc/rtorrent
+
+# Container Orchestration Files
+COPY entrypoint.d/20-rtorrent-start.sh /usr/local/bin/entrypoint.d/20-rtorrent-start.sh
+
+RUN chmod +x /usr/local/bin/entrypoint.d/*
+
+EXPOSE 80 443 50000/tcp 50000/udp
+
+# Standard Healthcheck (Verification of core system responsiveness)
+HEALTHCHECK NONE
+
+# Process Execution
+USER root
+WORKDIR /var/www/html
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["/bin/bash"]
